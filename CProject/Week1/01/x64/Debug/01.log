@@ -1,3 +1,4 @@
 ﻿  Source.c
+C:\Users\OFFICE\Desktop\NGH\Git\SBSPrograms\CProject\Week1\01\Source.c(17,9): warning C4475: 'printf' : length modifier 'll' cannot be used with type field character 'f' in format specifier
 C:\Users\OFFICE\Desktop\NGH\Git\SBSPrograms\CProject\Week1\01\Source.c(15,7): warning C4101: 'nData': unreferenced local variable
   01.vcxproj -> C:\Users\OFFICE\Desktop\NGH\Git\SBSPrograms\CProject\Week1\01\x64\Debug\01.exe
