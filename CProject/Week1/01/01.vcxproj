@@ -129,6 +129,10 @@
   <ItemGroup>
     <ClCompile Include="Source.c" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="%282023.04.11%29First%28THU%29_VARIABLE.H" />
+    <ClInclude Include="%282023.04.12%29Second%28WED%29_NAMING.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
