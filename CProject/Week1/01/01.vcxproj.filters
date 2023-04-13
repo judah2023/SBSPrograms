@@ -20,10 +20,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="%282023.04.11%29First%28THU%29_VARIABLE.H">
+    <ClInclude Include="%282023.04.11%29First%28TUE%29_VARIABLE.H">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="%282023.04.12%29Second%28WED%29_NAMING.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="%282023.04.13%29Third%28THU%29_FORMAT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
