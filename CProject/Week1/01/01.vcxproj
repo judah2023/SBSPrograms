@@ -133,6 +133,7 @@
     <ClInclude Include="%282023.04.11%29First%28TUE%29_VARIABLE.H" />
     <ClInclude Include="%282023.04.12%29Second%28WED%29_NAMING.h" />
     <ClInclude Include="%282023.04.13%29Third%28THU%29_FORMAT.h" />
+    <ClInclude Include="(2023.04.14)Fourth(FRI)_BRANCH.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
