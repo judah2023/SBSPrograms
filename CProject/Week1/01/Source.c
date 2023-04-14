@@ -3,9 +3,6 @@
 void main()
 {
 #pragma region Quadrant
-
-#pragma endregion
-
 	int x = 5, y = 5;
 
 	if (y != 0 && x > 0)
@@ -46,6 +43,7 @@ void main()
 			printf("원점\n");
 		}
 	}
+#pragma endregion
 
 }
 
