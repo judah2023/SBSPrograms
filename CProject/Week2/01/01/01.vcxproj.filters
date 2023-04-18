@@ -20,7 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="%282023.04.15%29Fifth%28MON%29_ITERATION.h">
+    <ClInclude Include="%282023.04.16%29Fifth%28MON%29_ITERATION.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="%282023.04.17%29Sixth%28TUE%29_POINTER.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

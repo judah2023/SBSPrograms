@@ -130,7 +130,8 @@
     <ClCompile Include="Source.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="%282023.04.15%29Fifth%28MON%29_ITERATION.h" />
+    <ClInclude Include="%282023.04.16%29Fifth%28MON%29_ITERATION.h" />
+    <ClInclude Include="%282023.04.17%29Sixth%28TUE%29_POINTER.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
