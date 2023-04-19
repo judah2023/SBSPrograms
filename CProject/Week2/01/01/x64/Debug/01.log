@@ -1,4 +1,2 @@
 ﻿  Source.c
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Week2\01\01\Source.c(123,10): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Week2\01\01\Source.c(118,7): warning C4133: 'initializing': incompatible types - from 'double *' to 'int *'
   01.vcxproj -> C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Week2\01\x64\Debug\01.exe
