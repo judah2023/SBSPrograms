@@ -3,68 +3,60 @@
 
 void main()
 {
-#pragma region OutPut_scanf
+#pragma region Odd Or Even
 	/*
 	
-	// 표준 입력 함수로, 여려 종류의 데이터를
-	// 다양한 서식에 맞추어 입력해주는 함수
-
-	// scanf <- SDL 검사 해제를 안하고 사용하게 될 경우 ERROR 발생
-
-	// scanf_s("입력할 변수의 서식", &변수)
-	int count = 2 << 30;
-
-	printf("Count 변수의 값(변경 전) : %4d\n", count);
-	
-	printf("변경할 값을 입력하세요. : ");
-	scanf_s("%d", &count);
-
-	printf("Count 변수의 값(변경 후) : %4d\n", count);
-
-	// 표준 입력 함수는 입력을 수행할 때까지
-	// 다음 작업으로 넘어갈 수 없습니다.
-	
-	*/
-
-	/*
-	
-	for (int i = 0; i < floor; i++)
+	// 문제 17 <- 입력
+	// 홀수 출력
+	int nInput;
+	scanf_s("%d", &nInput);
+	if (nInput % 2 == 0)
 	{
-		for (int j = 0; j <= i; j++)
-		{
-			printf("☆");
-		}
-		printf("\n");
+		printf("%d는 짝수입니다.\n", nInput);
+	}
+	else
+	{
+		printf("%d는 홀수입니다.\n", nInput);
 	}
 
-	*/
-	// 별 찍기
-	// 문제) 내가 입력한 값에 따라 별이 찍히도록 구현해주세요.
-
-	int floor = 0;
-
-	printf("몇 층으로 하시겠어요? : ");
-	scanf_s("%d", &floor);
-
-	
-	for (int i = 0; i < floor; i++)
+	int a, b, tmp;
+	printf("정수 2개를 입력해주세요. : ");
+	scanf_s("%d %d", &a, &b);
+	while (b != 0)
 	{
-		for (int j = 0; j <= floor + i; j++)
-		{
-			if ((i + j) % 2 == 0 || j < floor - i)
-			{
-				printf("  ");
-			}
-			else
-			{
-				printf("☆");
-			}
-		}
-		printf("\n");
+		tmp = b;
+		b	= a % b;
+		a	= tmp;
 	}
+
+	printf("a, b의 최대공약수 : %d\n", a);
+	
+	*/
 
 #pragma endregion
 
+#pragma region Naming Convention
+
+	/*
+	
+	// camel case (카멜 표기법)
+	// 첫 단어를 제외하고 첫 글자를 대문자로 표기
+
+	// ex) int playerHealth;
+
+	// pascal case (파스칼 표기법)
+	// 단어의 첫 글자를 대문자로 표기
+
+	// ex) void SelectTarget( ) { }
+
+	// snake case (스네이크 표기법)
+	// 전부 소문자로 작성하고 단어 사이에 _를 표기
+
+	// ex) api_url
+
+	*/
+
+#pragma endregion
 
 }
 
