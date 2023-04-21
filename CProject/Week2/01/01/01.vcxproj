@@ -134,6 +134,7 @@
     <ClInclude Include="%282023.04.18%29Sixth%28TUE%29_POINTER.h" />
     <ClInclude Include="(2023.04.19)Seventh(WED)_POINTER.h" />
     <ClInclude Include="%282023.04.20%29Eighth%28Thu%29_ARRAY.h" />
+    <ClInclude Include="%282023.04.21%29Nineth%28FRI%29_STRING.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
