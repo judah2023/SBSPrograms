@@ -1,161 +1,109 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
+#include "SoundManager.h"
 
-#define ADD(x,y)		(x + y)
-#define SWAP(T, x, y)	{T temp = x; x = y; y = temp;}
-
-#pragma region Function
+#pragma region Recursive_Function
 
 /*
 
-// 占싹놂옙占쏙옙 특占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쌜억옙占쏙옙 占쏙옙占쏙옙占싹깍옙 占쏙옙占쏙옙
-// 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占?占쌘듸옙占쏙옙 占쏙옙占쏙옙
+	// 어떤 함수에서 자신을 다시 호출하여 작업을 수행하는 함수
 
-// void : 占쏙옙占쏙옙 占쏙옙환占쏙옙占쏙옙 占십댐옙 占쌘뤄옙占쏙옙 ( 0占쏙옙占쏙옙트占쏙옙 占쌔쇽옙占싹댐옙 占쌘뤄옙占쏙옙)
-void Attack()
+	// return : 1. 값을 반환한다.
+	//			2. 함수를 반환한다.
+
+void Recursion(int number)
 {
-	for (int i = 0; i < 9; i++)
+	if (number == 0)
 	{
-		if (i < 9 && i % 4 == 0)
-		{
-			printf(" 占쏙옙占쏙옙");
-		}
-		else
-		{
-			printf(" !!!!");
-		}
-
-		if (i % 3 == 2)
-		{
-			printf("\n");
-		}
+		// 재귀함수는 함수를 계속 호출하기 때문에
+		// 스택 영역에 메모리가 계속 쌓이게 되므로
+		// 스택오버플로우가 발생
+		return;
 	}
-	printf("\n");
-}
 
-// 占쏙옙환占쏙옙 : 占쌉쇽옙占쏙옙 占쏙옙占쏙옙퓸占쏙옙占?占쏙옙 占쏙옙占쏙옙 占쏙옙환占쏙옙占쌍댐옙 占쏙옙占쏙옙
-int Function()
-{
-	return 100;
+	Recursion(number - 1);
+	printf("Recursion() %d번 호출 중...\n", number);
 }
-
-// 占쌉쇽옙占쏙옙 占쏙옙占?占쌘뤄옙占쏙옙占쏙옙 占쏙옙환占싹댐옙 占쏙옙占쏙옙 占쏙옙占승곤옙 占쏙옙치占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙
-// 占쏙옙占싹댐옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙 占쏙옙占쏙옙.
-int ProcessInt()
-{
-	return 67.5f;
-}
-
-// C占쏙옙楮∽옙占? 占쌉쇽옙 占싱몌옙占쏙옙 占쏙옙占쏙옙占싹댐옙. (占쌩븝옙 占쏙옙占쏙옙占쏙옙 占쌀곤옙占쏙옙)
 
 */
-
 #pragma endregion
 
-#pragma region Parameter
+#pragma region Factorial
 
 /*
 
-// 占쌉쇽옙占쏙옙 占쏙옙占실울옙占쏙옙 占쏙옙占쌨뱄옙占쏙옙 占싸쇽옙占쏙옙 
-// 占쌉쇽옙 占쏙옙占싸뤄옙 占쏙옙占쏙옙占싹깍옙 占쏙옙占쏙옙 占쏙옙占쏙옙求占?占쏙옙占쏙옙
-
-void Calculator(int x)
+unsigned long long Factorial(unsigned long long x)
 {
-	printf("占신곤옙占쏙옙占쏙옙占쏙옙 占쏙옙 : %d\n", x);
+	if (x == 0)
+	{
+		return 1;
+	}
+
+	unsigned long long result = x * Factorial(x - 1);
+	return result;
 }
 
-int Add(int x, int y)
+unsigned long long FactorialNonResursion(unsigned long long x)
 {
-	return x + y;
+	unsigned long long result = 1;
+
+	for (int i = 1; i <= x; i++)
+	{
+		result *= i;
+	}
+
+	return result;
 }
 
 */
 
 #pragma endregion
 
-// 참조에 의한 전달 (함수)
-void SwapReference (int *x, int *y)
+#pragma region Inline_Function
+
+/*
+
+	// 함수를 호출하는 대신 함수가 호출되는 위치마다
+	// 함수의 코드를 복사하여 전달하는 방식의 함수
+
+	// 함수 호출시 발생하는 '오버헤드'를 줄이기 위해 사용
+inline void Function()
 {
-	int temp;
-	temp = *x;
-	*x = *y;
-	*y = temp;
+	// inline 함수는 함수를 호출하는 과정이 없으므로
+	// 처리속도가 빠르지만, 인라인 함수를 많이 사용하게 되면
+	// 함수의 코드가 복사되기 때문에 실행 파일의 크기가 커지게 된다.
+
+	// 인라인 함수는 코드가 적은 간단한 함수로만 쓰는 것이 좋다.
+	printf("Function() 함수 호출중...\n");
 }
 
-// 값에 의한 전달 (함수)
-void Swap(int x, int y)
-{
-	printf("주소 값 : [&x, &y] = [%p, %p]\n", &x, &y);
-	printf("원래 값 : [x, y] = [%d, %d]\n", x, y);
+*/
 
-	int temp;
-	temp = x;
-	x = y;
-	y = temp;
+#pragma endregion
 
-	printf("결과 값 : [x, y] = [%d, %d]\n\n", x, y);
 
-}
+
+
 
 void main()
 {
-#pragma region Call_Function(None Parameter)
+#pragma region Iteration_Do~While
 
 	/*
-	//Attack();
-	//Attack();
 
-	printf("Function() : %d\n\n", Function());
-	printf("ProcessFloat() : %d\n\n", ProcessInt());
-	*/
+	// 조건과 상관없이 한번의 작업을 수행한 다음
+	// 조건에 따라 명령문을 실행하는 반복문
+	int count = 3;
 
-#pragma endregion
-
-#pragma region Call_Function(Using Parameter)
-
-	/*
-	
-	// 占싸쇽옙(Arguement)?
-	// 占쌉쇽옙占쏙옙 호占쏙옙占?占쏙옙 占신곤옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쌨되댐옙 占쏙옙
-	Calculator(100);
-
-	// 占싸쇽옙占쏙옙 占쏙옙占십울옙占쏙옙占쏙옙占쏙옙 占신곤옙占쏙옙占쏙옙占쏙옙 占쏙옙占쌨듸옙
-	printf("Add() 占쌉쇽옙占쏙옙 占쏙옙 : %d\n", Add(10, 20));
-	// printf("ADD() 占쌉쇽옙占쏙옙 占쏙옙 : %d\n", ADD(10, 20));
+	do
+	{
+		printf("로그인 %d번 시도중...\n", count);
+		count--;
+	} while (count > 0);
 
 	*/
 
 #pragma endregion
 
-#pragma region Call_by_Value_And_Call_by_Reference
-
-	/*
-	
-	printf("원래 값 : [a, b] = [%d, %d]\n\n", a, b);
-
-	// Call by value
-	Swap(a, b);
-
-	printf("결과 값 : [a, b] = [%d, %d]\n\n", a, b);
-
-	printf("\n\n\n");
-
-	*/
-
-	int a = 100;
-	int b = 200;
-
-	printf("원래 값 : [a, b] = [%d, %d]\n\n", a, b);
-
-	// Call by Reference
-	// 함수를 호출할 때 변수의 주소를 인수로 전달하게 되면
-	// 전달한 변수의 주소가 참조되어 인수로 전달한 값이
-	// 함수 내에서 일어난 연산에 대해 영향을 받는다.
-	SwapReference(&a, &b);
-
-	printf("결과 값 : [a, b] = [%d, %d]\n\n", a, b);
-
-
-#pragma endregion
-
+	Sound();
 }

@@ -143,6 +143,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="%282023.04.24%29Tenth%28Mon%29_FUNCTION.h" />
+    <ClInclude Include="%282023.04.25%29Eleventh%28TUE%29_RECURSIVE.h" />
+    <ClInclude Include="SoundManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -23,5 +23,11 @@
     <ClInclude Include="%282023.04.24%29Tenth%28Mon%29_FUNCTION.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="%282023.04.25%29Eleventh%28TUE%29_RECURSIVE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
