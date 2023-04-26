@@ -2,108 +2,205 @@
 #include <stdlib.h>
 #include "SoundManager.h"
 
-#pragma region Recursive_Function
+#pragma region Global
 
 /*
 
-	// 어떤 함수에서 자신을 다시 호출하여 작업을 수행하는 함수
+	// 함수 외부에서 선언된 변수로 프로그램 어디에서나 접근 가능
+	// 프로그램 종료시에만 메모리에서 해제
 
-	// return : 1. 값을 반환한다.
-	//			2. 함수를 반환한다.
+int  globalVar = 5;
 
-void Recursion(int number)
+void Function()
 {
-	if (number == 0)
-	{
-		// 재귀함수는 함수를 계속 호출하기 때문에
-		// 스택 영역에 메모리가 계속 쌓이게 되므로
-		// 스택오버플로우가 발생
-		return;
-	}
+	int count = 0;
+	globalVar += 1;
+	count += 1;
 
-	Recursion(number - 1);
-	printf("Recursion() %d번 호출 중...\n", number);
-}
-
-*/
-#pragma endregion
-
-#pragma region Factorial
-
-/*
-
-unsigned long long Factorial(unsigned long long x)
-{
-	if (x == 0)
-	{
-		return 1;
-	}
-
-	unsigned long long result = x * Factorial(x - 1);
-	return result;
-}
-
-unsigned long long FactorialNonResursion(unsigned long long x)
-{
-	unsigned long long result = 1;
-
-	for (int i = 1; i <= x; i++)
-	{
-		result *= i;
-	}
-
-	return result;
+	printf("count의 값 : %d\n", count);
+	printf("globalVar의 값 : %d\n", globalVar);
 }
 
 */
 
 #pragma endregion
 
-#pragma region Inline_Function
+#pragma region Static
 
 /*
 
-	// 함수를 호출하는 대신 함수가 호출되는 위치마다
-	// 함수의 코드를 복사하여 전달하는 방식의 함수
+static int attack;
 
-	// 함수 호출시 발생하는 '오버헤드'를 줄이기 위해 사용
-inline void Function()
+	// 지역 변수와 전역 변수의 특징을 가지고 있다.
+	// BSS : 초기화하지 않은 전역, 정적 변수가 있는 공간
+	// 프로그램 크기에 포함되지 않는다.
+
+void Calculator()
 {
-	// inline 함수는 함수를 호출하는 과정이 없으므로
-	// 처리속도가 빠르지만, 인라인 함수를 많이 사용하게 되면
-	// 함수의 코드가 복사되기 때문에 실행 파일의 크기가 커지게 된다.
+	static int value = 1;
+	value += 1;
 
-	// 인라인 함수는 코드가 적은 간단한 함수로만 쓰는 것이 좋다.
-	printf("Function() 함수 호출중...\n");
+	printf("static 변수value의 값 : %d\n", value);
 }
 
 */
 
 #pragma endregion
 
+void PrintDivisor(int x)
+{
+	printf("%d의 약수 : ", x);
+	for (int i = 1; i < x; i++)
+	{
+		if (x % i == 0)
+		{
+			printf("%d, ", i);
+		}
+	}
+	printf("%d\n", x);
+}
 
+int IsPrime(int x)
+{
+	if (x % 2 == 0)
+	{
+		if (x == 2)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
 
+	for (int i = 3; i * i <= x; i += 2)
+	{
+		if (x % i == 0)
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
 
 
 void main()
 {
-#pragma region Iteration_Do~While
+#pragma region Local
 
 	/*
+	
+	// A 지역
+	int data = 100;
 
-	// 조건과 상관없이 한번의 작업을 수행한 다음
-	// 조건에 따라 명령문을 실행하는 반복문
-	int count = 3;
-
-	do
-	{
-		printf("로그인 %d번 시도중...\n", count);
-		count--;
-	} while (count > 0);
+	{	// B 지역
+		int data = 20;
+		printf("B 지역 data의 값 : %d\n", data);
+	}
+	printf("A 지역 data의 값 : %d\n", data);
 
 	*/
 
 #pragma endregion
 
-	Sound();
+#pragma region Void_Pointer
+
+	/*
+
+	// 자료형이 정해지지 않은 상태로 
+	// 모든 자료형을 저장 할 수 있는 포인터
+
+	char cData = 'X';
+	int nData = 10;
+
+	// 범용 포인터는 메모리 주소에 접근해서
+	// 값을 변경할 수 없다
+	void* vPtr = NULL;
+
+	vPtr = &cData;
+	printf("%c\n", *(char*)vPtr);
+
+	// 범용 포인터로 변수의 메모리에 접근하려면
+	// 범용 포인터가 참조하는 변수의 자료형으로
+	// 형 변환 해주어야 한다
+	*(char*)vPtr = 'D';
+	printf("%c\n\n", *(char*)vPtr);
+
+
+	vPtr = &nData;
+	printf("%d\n", *(int*)vPtr);
+
+	*(int*)vPtr = 100;
+	printf("%d\n\n", *(int*)vPtr);
+	
+	*/
+
+#pragma endregion
+
+#pragma region Divisor
+
+	/*
+
+	// 문제) 내가 입력한 숫자의 약수를 출력하세요.
+	// 12 -> 1, 2, 3, 4, 6, 12
+
+	int x = 0;
+	printf("자연수를 입력해주세요 : ");
+	scanf_s("%d", &x);
+
+	PrintDivisor(x);
+
+	printf("%d의 소인수 분해 결과 : ", x);
+	for (int i = 2; x != 1; i += 2)
+	{
+		int baseCount = 0;
+
+		while (IsPrime(i) && x % i == 0)
+		{
+			baseCount++;
+			x /= i;
+		}
+
+		if (baseCount > 0)
+		{
+			printf("%d^%d ", i, baseCount);
+		}
+
+		if (i == 2)
+		{
+			i--;
+		}
+	}
+	
+	*/
+
+#pragma endregion
+
+#pragma region Short_Circuit
+
+	/*
+	
+	*/
+
+	// 논리 연산에서 두 피연산자 중 어는 한쪽만 '참'이면
+	// 우측의 피연산자의 값은 평가하지 않고 바로 결과를 얻는 행위
+
+	// &&, ||	(논리 연산자)
+	// &, |		(비트 연산자)
+
+	int x = 0;
+	int y = 1;
+
+	if (x == -1 && ++y == 2) { }
+
+	printf("x의 값 : %d, y의 값 : %d\n", x, y);
+
+	if (x == 0 || ++y == 2) { }
+
+	printf("x의 값 : %d, y의 값 : %d\n", x, y);
+
+#pragma endregion
+
+	
 }

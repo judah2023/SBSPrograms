@@ -1,6 +1,8 @@
-#pragma once
+ï»¿#pragma once
+
+#include <stdio.h>
 
 void Sound()
 {
-	printf("»ç¿îµå() ½ÇÇà...\n");
+	printf("ì‚¬ìš´ë“œ() ì‹¤í–‰...\n");
 }
