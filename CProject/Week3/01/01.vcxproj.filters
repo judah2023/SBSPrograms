@@ -32,5 +32,8 @@
     <ClInclude Include="%282023.04.26%29Tweleve%28WED%29_GLOBAL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="%282023.04.27%29Thirteenth%28THU%29_MALLOC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
