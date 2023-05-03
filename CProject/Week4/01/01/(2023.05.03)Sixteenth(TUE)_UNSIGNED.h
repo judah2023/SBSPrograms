@@ -1,4 +1,6 @@
-﻿#include <stdio.h>
+﻿#pragma once
+
+#include <stdio.h>
 
 #pragma region Enum
 
@@ -22,7 +24,7 @@ enum State
 	ATTACK,
 	DIE
 };
-	
+
 */
 
 #pragma endregion
@@ -35,10 +37,10 @@ int main()
 
 	// 배열의 요소로 또 다른 배열을 가지는 배열
 
-	// 2차원 배열은 행과 열로 구분되며 
+	// 2차원 배열은 행과 열로 구분되며
 	// 앞의 번호는 행의 갯수를 의미하고, 뒤의 번호는 열의 갯수를 의미한다.
-	int array2D[4][3] = 
-	{ 
+	int array2D[4][3] =
+	{
 		{ 10,	 20,	 30 },
 		{ 40,	 50,	 60 },
 		{ 70,	 80,	 90 },
@@ -58,7 +60,7 @@ int main()
 
 	printf("ptr이 가리키는 값 : %d\n", *ptr);
 	printf("arrPtr이 가리키는 값 : %d\n", (*arrPtr)[0]);
-	
+
 	*/
 
 #pragma endregion

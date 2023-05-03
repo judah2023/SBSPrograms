@@ -23,5 +23,8 @@
     <ClInclude Include="%282023.05.02%29Fifteenth%28MON%29_UNSIGNED.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="(2023.05.03)Sixteenth(TUE)_UNSIGNED.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
