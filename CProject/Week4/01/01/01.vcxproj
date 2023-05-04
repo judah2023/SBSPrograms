@@ -130,8 +130,9 @@
     <ClCompile Include="Source.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="%282023.05.02%29Fifteenth%28MON%29_UNSIGNED.h" />
-    <ClInclude Include="(2023.05.03)Sixteenth(TUE)_UNSIGNED.h" />
+    <ClInclude Include="%282023.05.02%29Fifteenth%28TUE%29_UNSIGNED.h" />
+    <ClInclude Include="%282023.05.03%29Sixteenth%28WED%29_ENUM.h" />
+    <ClInclude Include="(2023.05.04)Seventeenth(THU)_ENUM.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

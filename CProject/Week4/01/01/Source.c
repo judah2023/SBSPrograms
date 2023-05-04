@@ -1,67 +1,141 @@
 ﻿#include <stdio.h>
-
-#pragma region Enum
-
-/*
-
-// 요소, 멤버라 불리는 명명된 값의 집합을 이루는 자료형
-
-// enum 선언
-enum Color
-{
-	// 열거형은 초기값을 설정할 수 있으며,
-	// 그 다음 상수 값은 1씩 증가합니다.
-	BLACK = 10,
-	RED,
-	BLUE
-};
+#include <math.h>
 
 enum State
 {
 	IDLE,
-	ATTACK,
+	BE_ATTACK,
 	DIE
 };
-	
-*/
 
-#pragma endregion
+struct Player
+{
+	int		x, y;	// Position
+
+	int		hp;
+	float	attack;
+	enum State state;
+};
+
+struct Enemy
+{
+	int		x, y;	// Position
+
+	int		hp;
+	float	attack;
+	enum State state;
+};
 
 int main()
 {
-#pragma region Multidimensional_Array
+#pragma region Structure_Pointer
 
 	/*
 
-	// 배열의 요소로 또 다른 배열을 가지는 배열
+	struct Player player = { 1, 0.1f };
+	struct Player *ptrPlayer = NULL;
 
-	// 2차원 배열은 행과 열로 구분되며 
-	// 앞의 번호는 행의 갯수를 의미하고, 뒤의 번호는 열의 갯수를 의미한다.
-	int array2D[4][3] = 
-	{ 
-		{ 10,	 20,	 30 },
-		{ 40,	 50,	 60 },
-		{ 70,	 80,	 90 },
-		{ 100,	 110,	 120 }
-	};
+	ptrPlayer = &player;
 
-	printf("array2D의 값		: %p\n", array2D);
-	printf("array2D[0][0]의 주소	: %p\n", &array2D[0][0]);
+	(*ptrPlayer).hp = 100;
+	(*ptrPlayer).attack = 12.5f;
 
-	int* ptr = NULL;
-	ptr = &array2D[0][0];
+	printf("%d\n", (*ptrPlayer).hp);
+	printf("%.2f\n\n", (*ptrPlayer).attack);
 
-	// 배열 포인터
-	// 특정 사이즈의 배열'만' 가리킬 수 있는 하나의 포인터
-	int (*arrPtr)[3] = NULL;
-	arrPtr = array2D;
+	ptrPlayer->hp = 250;
+	ptrPlayer->attack = 22.75f;
 
-	printf("ptr이 가리키는 값 : %d\n", *ptr);
-	printf("arrPtr이 가리키는 값 : %d\n", (*arrPtr)[0]);
+	printf("%d\n", ptrPlayer->hp);
+	printf("%.2f\n\n", ptrPlayer->attack);
 	
 	*/
 
 #pragma endregion
+
+#pragma region Distance
+
+	/*
+
+	// 제곱근 (sqrt)
+	printf("sprt(49) : %lf\n", sqrt(49));
+
+	// 거듭제곱
+	printf("2^3 : %lf\n", pow(2, 3));
+
+	int a_0 = 1;
+	int d = 2;
+
+	int n = 0;
+
+	printf("d, n : ");
+	scanf_s("%d %d", &d, &n);
+
+	for (int i = 0; i <= n; i++)
+	{
+		printf("a_%d = %d\n", i, a_0 + i * d);
+	}
+
+	struct Player player1;
+	player1.x = 0;
+	player1.y = 0;
+
+	struct Enemy emeny1;
+	emeny1.x = 5;
+	emeny1.y = 7;
+
+	int xDistance = emeny1.x - player1.x;
+	int yDistance = emeny1.y - player1.y;
+
+	float distance = sqrt(xDistance * xDistance + yDistance * yDistance);
+
+	if (distance >= 5.0f)
+	{
+		printf("주변에 적이 없습니다.\n");
+	}
+	else
+	{
+		printf("근처에 적이 있습니다!\n");
+		printf("distance : %lf\n", distance);
+	}
+	
+	*/
+
+#pragma endregion
+
+#pragma region Rounding_Error
+
+	/*
+
+	// 부동 소수점
+	// 소수점의 위치를 고정하지 않고 소수를 나타내는 방법
+
+	// 고정 소수점
+	// 소수점의 위치를 고정하여 소수를 나타내는 방법
+
+	// 12.375
+
+	// float (4Byte)
+	float fData = 12.3f;
+	printf("fData = %.20f\n", fData);
+
+	// double (8Byte)
+	double dData = 1.3123;
+	printf("dData = %.20lf\n\n", dData);
+
+	if (fData == 12.3e-0)
+	{
+		printf("Equal\n");
+	}
+	else
+	{
+		printf("Not Equal\n");
+	}
+	
+	*/
+
+#pragma endregion
+
 
 	return 0;
 }
