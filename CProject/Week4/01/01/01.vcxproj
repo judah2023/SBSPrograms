@@ -133,7 +133,8 @@
     <ClInclude Include="%282023.05.02%29Fifteenth%28TUE%29_UNSIGNED.h" />
     <ClInclude Include="%282023.05.03%29Sixteenth%28WED%29_ENUM.h" />
     <ClInclude Include="%282023.05.04%29Seventeenth%28THU%29_Round.h" />
-    <ClInclude Include="%282023.05.09%29Eighteenth%28MON%29_TYPEDEF.h" />
+    <ClInclude Include="%282023.05.09%29Eighteenth%28TUE%29_TYPEDEF.h" />
+    <ClInclude Include="(2023.05.10)Nineteenth(WED)_Ternary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
