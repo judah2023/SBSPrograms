@@ -1,102 +1,104 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include <stdarg.h>
-
-void Array(int array[], int size)
-{
-	for (int i = 0; i < size; i++)
-	{
-		array[i] = 100 * i;
-	}
-}
-
-void ChangeString(char str[], int size)
-{
-	for (int i = 0; str[i] != '\0'; i++)
-	{
-		if (str[i] >= 'a' && str[i] <= 'z')
-		{
-			str[i] -= 32;
-		}
-	}
-}
-
-void Information(int size, ...)
-{
-	// va_list
-	// 각 가변 인자의 시작주소를 가리키는 포인터
-	va_list argPtr;
-
-	// va_start
-	// va_list로 만들어진 포인터에게 가변인자 중
-	// 첫 번째 인자의 주소를 가르쳐주는 매크로입니다.
-	va_start(argPtr, size);
-
-	int result = 0;
-
-
-	for (int i = 0; i < size; i++)
-	{
-		// va_arg
-		// 특정 가변인자를 가리키고 있는 va_list의 포인터를
-		// 다음 가변인자로 이동시켸 주는 매크로입니다.
-		result += va_arg(argPtr, int);
-	}
-
-	printf("result : %d\n", result);
-	
-	// va_end
-	// 사용한 가변인자 변수를 끝낼 때 NULL로 돌려주는 매크로
-	va_end(argPtr);
-}
+﻿#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 int main()
 {
-#pragma region Array_Parameter
+#pragma region Rand
+	
+	/*
+	
+	// 0 ~ 32767 사이의 난수 값을 생성하는 함수
+
+	// time : 1970년 1월 1일 (UTC)부터 현재까지 흐론 시간(초)을 반환
+	
+	*/
+	
+#pragma endregion
+
+#pragma region Up-Down_Game
 
 	/*
 	
-	int dataList[5] = { 1, 2, 3, 4, 5 };
+	srand((unsigned)time(NULL));
 
-	Array(dataList, 5);
 
-	printf("List : ");
-	for (int i = 0; i < 5; i++)
+	// 1. 컴퓨터가 랜덤한 값 (1 ~ 50)을 뽑는다.
+	int key = rand() % 49 + 1;
+	int answer = 0;
+	// 2. Life는 5개 -> 0개가 되면 게임오버
+	int lifeCount = 5;
+	int isWin = 0;
+
+	while (lifeCount)
 	{
-		printf("%d ", dataList[i]);
+		// 3. 컴퓨터가 랜덤한 값을 맞추기 위해
+		//	  임의의 수를 입력
+		printf("남은 기회 : %d\n", lifeCount);
+		printf("숫자를 입력해수세요 (1 ~ 50) : ");
+		scanf_s("%d", &answer);
+
+		if (answer < 1 || answer > 50)
+		{
+			system("cls");
+			continue;
+		}
+
+		// 4. 컴퓨터가 입력한 값을 맞추면 승리
+		if (answer == key)
+		{
+			isWin = 1;
+			break;
+		}
+		else
+		{
+			// 5. 내가 입력한 값보다 큰지 작은지를 출력
+			printf("\n*********************\n");
+			if (answer > key)
+			{
+				printf("\n\tDown!!!\n");
+			}
+			else
+			{
+				printf("\n\tUp!!!\n");
+			}
+			printf("\n*********************\n\n");
+
+			// 6. 숫자를 틀릴수록 Life 1 감소
+			lifeCount--;
+		}
 	}
-	printf("\n");
+
+	if (isWin)
+	{
+		printf("\n\n게임에서 승리했습니다!!!\n\n");
+	}
+	else
+	{
+		printf("\n\n게임에서 패배했습니다...\n");
+		printf("정답 : %d\n\n", key);
+	}
 
 	*/
 
 #pragma endregion
 
-	/*
-	
-	char ptr[27] = { 0 };
-	
-	scanf("%[^\n]s", ptr);
-
-	// 소문자 입력
-	// 대문자로 변경
-	ChangeString(ptr, 27);
-
-	printf("%s\n", ptr);
-
-	*/
-
-#pragma region Dynamic_argument
+#pragma region Interger_Promotion
 
 	/*
+
+	// char 자료형과 short 자료형이 연산이 이루어질 때,
+	// CPU가 처리하기에 가장 적합한 크기의 정수 자료형
+	// int로 자동 형 변환하는 과정
+
+	char data1 = 5;
+	short data2 = 10;
+
+	printf("sizeof(data1 + data2) : %lluByte\n", sizeof(data1 + data2));
 	
 	*/
-
-	// 매개변수로 들어오는 값의 갯수와 상관없이
-	// 동적으로 인수를 받을 수 있는 인수입니다.
-	Information(5, 1, 2, 3, 4, 5);
 
 #pragma endregion
 
-	
 	return 0;
 }
