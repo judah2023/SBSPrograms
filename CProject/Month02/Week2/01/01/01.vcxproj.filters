@@ -19,4 +19,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="(2023.05.15) TwentyFirst_KBHIT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="%282023.05.16%29 TwentySecond_GOTOXY.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

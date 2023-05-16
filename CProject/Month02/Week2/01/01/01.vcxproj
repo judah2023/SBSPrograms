@@ -129,6 +129,10 @@
   <ItemGroup>
     <ClCompile Include="Source.c" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="(2023.05.15) TwentyFirst_KBHIT.h" />
+    <ClInclude Include="%282023.05.16%29 TwentySecond_GOTOXY.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
