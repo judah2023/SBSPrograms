@@ -4,7 +4,7 @@
 #include <time.h>
 #include <Windows.h>
 
-#define SIZE 100
+#define SIZER 100
 
 void PrintReverse(char string[])
 {
