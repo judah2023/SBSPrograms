@@ -4,6 +4,8 @@
 #include <time.h>
 #include <Windows.h>
 
+#define SIZE 50
+
 void PrintReverse(char string[])
 {
 	if (string[0] == '\0')
