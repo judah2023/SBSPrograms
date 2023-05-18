@@ -7,6 +7,8 @@ int main()
 {
 	int A, B, V;
 	cin >> A >> B >> V;
-	int days = (V - A) / (A - B);
+	int days = ceil((V - A) / (double)(A - B)) + 1;
+
+	cout << days << endl;
 	return 0;
 }
