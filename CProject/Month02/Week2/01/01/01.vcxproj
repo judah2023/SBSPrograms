@@ -132,6 +132,8 @@
   <ItemGroup>
     <ClInclude Include="(2023.05.15) TwentyFirst_KBHIT.h" />
     <ClInclude Include="%282023.05.16%29 TwentySecond_GOTOXY.h" />
+    <ClInclude Include="(2023.05.17) TwentyThird_FILE.h" />
+    <ClInclude Include="(2023.05.18) TwentyFourth_FILE.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="box.txt" />
