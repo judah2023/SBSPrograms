@@ -5,10 +5,28 @@ using namespace std;
 
 int main()
 {
-	int A, B, V;
-	cin >> A >> B >> V;
-	int days = ceil((V - A) / (double)(A - B)) + 1;
+	int A = 1, B = 1;
+	while (true)
+	{
+		cin >> A >> B;
+		if (A == 0 && B == 0)
+		{
+			break;
+		}
 
-	cout << days << endl;
+		if (B % A == 0)
+		{
+			cout << "factor" << endl;
+		}
+		else if (A % B == 0)
+		{
+			cout << "multiple" << endl;
+		}
+		else
+		{
+			cout << "neither" << endl;
+		}
+	}
+	
 	return 0;
 }

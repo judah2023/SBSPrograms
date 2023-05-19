@@ -1,3 +1,2 @@
 ﻿  Source.cpp
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\Other\Project2\Project2\Source.cpp(10,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   Project2.vcxproj -> C:\Users\Administrator\Desktop\NGH\SBSPrograms\Other\Project2\x64\Debug\Project2.exe
