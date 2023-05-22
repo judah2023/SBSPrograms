@@ -77,7 +77,7 @@ void ScreenInit()
 	// 커서의 활성화 여부
 	// false : 거짓
 	// true  : 참
-	cursor.dwSize = 0;
+	cursor.dwSize = 1;
 	cursor.bVisible = false;
 
 	SetConsoleCursorInfo(Screen[0], &cursor);
