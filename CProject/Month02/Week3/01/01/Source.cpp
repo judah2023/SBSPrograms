@@ -1,11 +1,27 @@
 ﻿#include <stdio.h>
 #include <conio.h>
+#include <time.h>
 #include <string.h>
 #include <Windows.h>
 
+enum COLORS
+{
+	BLACK,
+	BLUE,
+	GREEN,
+	JADE,
+	RED,
+	PURPLE,
+	YELLOW,
+	GRAY,
+	WHITE
+};
+
 enum Maze
 {
-	MAZE_SIZE = 12,
+	MAZE_HEITH = 30,
+	MAZE_WIDTH = 30,
+	ENEMY_SIZE = 30,
 
 	MAZE_ROAD = L'0',
 	MAZE_WALL,
@@ -21,6 +37,8 @@ enum Arrows
 	DOWN	= 80
 };
 
+int map[MAZE_HEITH][MAZE_WIDTH] = { 0 };
+
 // 플레이어 구조체
 struct Player
 {
@@ -28,46 +46,82 @@ struct Player
 	const char* shape;	// 모양
 };
 
-// 미로 맵 데이터
-TCHAR maze[MAZE_SIZE][MAZE_SIZE];
+struct Enemy
+{
+	COORD pos;			// 좌표
+	const char* shape;	// 모양
+	int enabled;		// 출력여부
+};
 
 // 좌표 이동 함수
 void GotoXY(int x, int y);
 
-bool isEqualCoord(COORD playerPos, COORD destination);
+void TextColor(int clolrCode);
 
-// 미로 맵 생성
-void InitGame();
+void OutputMaze(Player player, Enemy enemys[], int idxSize);
 
-void Renderer();
+void DropEnemy(Enemy(*enemys)[ENEMY_SIZE], int idxSize);
 
-void OutputMaze(Player player);
+void Keyboard(Player* ptrPlayer);
 
-void Keyboard(TCHAR maze[MAZE_SIZE][MAZE_SIZE], Player *ptrPlayer);
+COORD RandomPos();
+
 
 int main()
 {
-	const COORD destination = { 0, 1 };
-	const COORD start = { 9, 9 };
-	Player player = { start, "＠"};
-	bool isGameClear = 1;
+	system("mode con cols=62 lines=35 | title 똥피하기");
+	srand((unsigned)time(NULL));
 
-	InitGame();
-	while (isGameClear)
+	const COORD playerStart = { MAZE_WIDTH / 2, MAZE_HEITH };
+	clock_t dropDelayTime = 0, spawnDelayTime = 0;
+	clock_t firstTime = 0, lastTime = 0;
+	Player player = { playerStart, "＠"};
+	bool isGameOver = 0;
+	
+	Enemy enemy = { RandomPos(), "■", 1 };
+	Enemy enemys[ENEMY_SIZE];
+	int enemyIdx = 0;
+
+	for (int i = 0; i < ENEMY_SIZE; i++)
 	{
-		if (isEqualCoord(player.pos, destination))
-		{
-			isGameClear = 0;
-		}
-		Keyboard(maze, &player);
-
-		OutputMaze(player);
-		Sleep(17);
-		system("cls");
+		enemys[i].pos = RandomPos();
+		enemys[i].shape = "■";
 	}
 
-	printf("미로를 탈출했습니다!!!\n");
-	system("pause");
+	while (!isGameOver)
+	{
+		if (enemy.pos.X == player.pos.X &&
+			enemy.pos.Y == player.pos.Y)
+		{
+			isGameOver = 1;
+		}
+
+		lastTime = clock();
+		dropDelayTime += (lastTime - firstTime);
+		spawnDelayTime += (lastTime - firstTime);
+
+		if (spawnDelayTime > 500 && enemyIdx < ENEMY_SIZE)
+		{
+			enemys[enemyIdx].enabled = 1;
+			spawnDelayTime = 0;
+			enemyIdx++;
+		}
+
+		if (dropDelayTime > 50)
+		{
+			DropEnemy(&enemys, enemyIdx);
+			dropDelayTime = 0;
+		}
+
+		Keyboard(&player);
+		OutputMaze(player, enemys, enemyIdx);
+		Sleep(17);
+		system("cls");
+		firstTime = lastTime;
+	}
+	
+	TextColor(RED);
+	printf("\n\nGame Over!!!\n\n");
 
 	return 0;
 }
@@ -78,78 +132,47 @@ void GotoXY(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
-bool isEqualCoord(COORD playerPos, COORD destination)
+void TextColor(int colorCode)
 {
-	if (playerPos.X == destination.X)
-		if (playerPos.Y == destination.Y)
-			return true;
-
-	return false;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colorCode);
 }
 
-// 미로 맵 생성
-void InitGame()
+void DropEnemy(Enemy (*enemys)[ENEMY_SIZE], int idxSize)
 {
-	// 0 : 통로, 1 : 벽, 2 : 탈출구, 3 : 시작 점
-	wcscpy_s(maze[0], L"1111111111");
-	wcscpy_s(maze[1], L"3000010001");
-	wcscpy_s(maze[2], L"1111011011");
-	wcscpy_s(maze[3], L"1010010001");
-	wcscpy_s(maze[4], L"1011011011");
-	wcscpy_s(maze[5], L"1001000001");
-	wcscpy_s(maze[6], L"1011001111");
-	wcscpy_s(maze[7], L"1011101001");
-	wcscpy_s(maze[8], L"1010101101");
-	wcscpy_s(maze[9], L"10000000002");
-	wcscpy_s(maze[10],L"1111111111");
-	wcscpy_s(maze[11],L"");
-	
-	CONSOLE_CURSOR_INFO cursor = {0, };
-	cursor.dwSize = 1;
-	cursor.bVisible = false;
-	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
-}
-
-void Renderer()
-{
-	for (int i = 0; i < MAZE_SIZE; i++)
+	for (int i = 0; i < idxSize; i++)
 	{
-		for (int j = 0; j < MAZE_SIZE; j++)
+		if (enemys[i]->pos.Y < MAZE_HEITH)
 		{
-			switch (maze[i][j])
-			{
-			case MAZE_ROAD:
-				printf("  ");
-				break;
-			case MAZE_WALL:
-				printf("■");
-				break;
-			case MAZE_EXIT:
-				printf("☆");
-				break;
-			case MAZE_START:
-				printf("←");
-				break;
-			case '\0':
-				printf("\n");
-				break;
-			default:
-				break;
-			}
+			enemys[i]->pos.Y++;
+		}
+		else
+		{
+			enemys[i]->pos.X = rand() % MAZE_WIDTH;
+			enemys[i]->pos.Y = 0;
 		}
 	}
 }
 
-void OutputMaze(Player player)
+void OutputMaze(Player player, Enemy enemys[], int idxSize)
 {
-	Renderer();
+	for (int i = 0; i < idxSize; i++)
+	{
+		if (enemys[i].enabled)
+		{
+			GotoXY(enemys[i].pos.X, enemys[i].pos.Y);
+			TextColor(YELLOW);
+			printf("%s", enemys[i].shape);
+		}
+	}
+
 	GotoXY(player.pos.X, player.pos.Y);
+	TextColor(BLUE);
 	printf("%s", player.shape);
 }
 
-void Keyboard(TCHAR maze[MAZE_SIZE][MAZE_SIZE], Player* ptrPlayer)
+void Keyboard(Player* ptrPlayer)
 {
-	COORD *pos = &ptrPlayer->pos;
+	COORD* pos = &ptrPlayer->pos;
 	char key = 0;
 	if (_kbhit())
 	{
@@ -161,32 +184,26 @@ void Keyboard(TCHAR maze[MAZE_SIZE][MAZE_SIZE], Player* ptrPlayer)
 
 		switch (key)
 		{
-		case UP:
-			if (maze[pos->Y - 1][pos->X] != MAZE_WALL && ptrPlayer->pos.Y > 0)
-			{
-				pos->Y--;
-			}
-			break;
 		case LEFT:
-			if (maze[pos->Y][pos->X - 1] != MAZE_WALL && ptrPlayer->pos.X > 0)
+			if (ptrPlayer->pos.X > 0)
 			{
 				pos->X--;
 			}
 			break;
 		case RIGHT:
-			if (maze[pos->Y][pos->X + 1] != MAZE_WALL && ptrPlayer->pos.X < MAZE_SIZE - 3)
+			if ( ptrPlayer->pos.X < MAZE_WIDTH)
 			{
 				pos->X++;
-			}
-			break;
-		case DOWN:
-			if (maze[pos->Y + 1][pos->X] != MAZE_WALL && ptrPlayer->pos.Y < MAZE_SIZE - 2)
-			{
-				pos->Y++;
 			}
 			break;
 		default:
 			break;
 		}
 	}
+}
+
+COORD RandomPos()
+{
+	COORD pos = { rand() % MAZE_WIDTH, 0 };
+	return pos;
 }
