@@ -131,6 +131,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="%282023.05.22%29 TwentyFifth_MAZE.h" />
+    <ClInclude Include="(2023.05.23) TwentySixth_BUILD.h" />
+    <ClInclude Include="FrameWork\LoadManager.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\Scenario\test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

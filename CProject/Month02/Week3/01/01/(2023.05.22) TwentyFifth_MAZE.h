@@ -14,7 +14,7 @@ enum Maze
 	MAZE_EXIT
 };
 
-enum Arrows
+enum ARROWS
 {
 	UP = 72,
 	LEFT = 75,

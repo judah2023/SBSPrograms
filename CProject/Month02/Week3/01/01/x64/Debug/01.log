@@ -1,4 +1,4 @@
 ﻿  Source.cpp
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Month02\Week3\01\01\Source.cpp(131,18): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Month02\Week3\01\01\Source.cpp(131,23): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Month02\Week3\01\01\Source.cpp(76,18): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Month02\Week3\01\01\Source.cpp(76,23): warning C4838: conversion from 'const int' to 'SHORT' requires a narrowing conversion
   01.vcxproj -> C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Month02\Week3\01\x64\Debug\01.exe
