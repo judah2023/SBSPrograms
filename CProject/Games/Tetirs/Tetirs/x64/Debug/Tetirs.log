@@ -1,0 +1,5 @@
+﻿  Double_Buffering.cpp
+C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Games\Tetirs\Tetirs\Double_Buffering.cpp(81,29): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Games\Tetirs\Tetirs\Double_Buffering.cpp(81,34): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Games\Tetirs\Tetirs\Double_Buffering.cpp(89,10): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
+  Tetirs.vcxproj -> C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Games\Tetirs\x64\Debug\Tetirs.exe

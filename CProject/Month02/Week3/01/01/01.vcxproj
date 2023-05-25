@@ -132,6 +132,8 @@
   <ItemGroup>
     <ClInclude Include="%282023.05.22%29 TwentyFifth_MAZE.h" />
     <ClInclude Include="(2023.05.23) TwentySixth_BUILD.h" />
+    <ClInclude Include="(2023.05.24) TwentySeventh_ROOT.h" />
+    <ClInclude Include="(2023.05.25) TwentyEighth_BUILD.h" />
     <ClInclude Include="FrameWork\LoadManager.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

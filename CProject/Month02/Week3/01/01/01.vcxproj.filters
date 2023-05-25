@@ -38,6 +38,12 @@
     <ClInclude Include="FrameWork\LoadManager.h">
       <Filter>FrameWork</Filter>
     </ClInclude>
+    <ClInclude Include="(2023.05.24) TwentySeventh_ROOT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="(2023.05.25) TwentyEighth_BUILD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resources\Scenario\test.txt">

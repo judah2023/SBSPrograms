@@ -1,25 +1,11 @@
 ﻿#include <iostream>
 using namespace std;
 
+int isPrimeTable[10001] = { 0 };
+
 int main()
 {
-	char strings[5][16] = { 0 };
-
-	for (int i = 0; i < 5; i++)
-	{
-		cin.getline(strings[i], 16);
-	}
-
-	for (int i = 0; i < 15; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			if (strings[j][i] != '\0')
-			{
-				cout << strings[j][i];
-			}
-		}
-	}
+	fill(isPrimeTable[2], isPrimeTable[10000], 1);
 	
 	return 0;
 }

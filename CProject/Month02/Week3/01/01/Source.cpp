@@ -1,134 +1,38 @@
-﻿#include <time.h>
-#include "FrameWork/LoadManager.h"
+﻿#include <stdio.h>
+#include <string.h>
 
-enum COLORS
+int StrLength(const char * string)
 {
-	BLACK,
-	BLUE,
-	GREEN,
-	JADE,
-	RED,
-	PURPLE,
-	YELLOW,
-	GRAY,
-	WHITE
-};
+	int cnt = -1;
+	while (string[++cnt] != '\0');
 
-enum ARROWS
-{
-	UP		= 72,
-	LEFT	= 75,
-	RIGHT	= 77,
-	DOWN	= 80
-};
-
-enum CONSTANTS
-{
-	SPACING = 5,
-};
-
-struct Select
-{
-	int x, y;
-	const char* shape;
-};
-
-clock_t prevTime = 0, currTime = 0;
-
-// 좌표 이동 함수
-void GotoXY(const int x, const int y);
-void TextColor(const int clolrCode);
-void TimePass();
-clock_t DeltaTime();
-
-void Typing(const char* content, unsigned int speed);
-void Keyboard(Select *selectPtr);
+	return cnt;
+}
 
 int main()
 {
-	// 파일 읽기
-	// ReadTextFile("Resources/Scenario/test.txt");
+#pragma region String_Functions
+	// strlen : 문자열 길이 함수
 
-	int stage = 0;
+	// strcpy : 문자열 복사 함수
 
-	Select selects = { 5, 30, "→" };
+	// strcat : 문자열 연결 함수
+	char content1[20] = { "Hello" };
+	char spacing[2] = " ";
+	char content2[10] = { "Update" };
 
-	while (true)
-	{
-		Keyboard(&selects);
-		GotoXY(selects.x, selects.y);
-		printf("%s", selects.shape);
-		switch (stage)
-		{
-		case 1:	Typing("Resources/Scenario/test.txt", 1);
-			break;
-		default:
-			break;
-		}
-		system("cls");
-	}
+	printf("strlen(content1) : %llu\n", strlen(content1));
+	printf("StrLength(content1) : %d\n", StrLength(content1));
+
+	strcat_s(content1, spacing);
+	strcat_s(content1, content2);
+
+	printf("%s\n", content1);
+
+
+
+
+#pragma endregion
 
 	return 0;
-}
-
-void GotoXY(const int x, const int y)
-{
-	COORD pos = { 2 * x, y };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
-}
-
-void TextColor(const int colorCode)
-{
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colorCode);
-}
-
-void TimePass()
-{
-	prevTime = currTime;
-	currTime = clock();
-}
-
-clock_t DeltaTime()
-{
-	return (currTime - prevTime);
-}
-
-void Typing(const char* content, unsigned int speed)
-{
-	if (speed > 1000)
-		speed = 1000;
-	else if (speed < 0)
-		speed = 0;
-	
-	ReadTextFile(speed, content);
-}
-
-void Keyboard(Select* selectPtr)
-{
-	char key = 0;
-	if (_kbhit())
-	{
-		key = _getch();
-		if (key == -32)
-		{
-			key = _getch();
-		}
-
-		switch (key)
-		{
-		case UP:	
-			if (selectPtr->y < 5)
-			{
-			}
-			else
-			{
-				selectPtr->y -= SPACING;
-			}
-			break;
-		case DOWN:	selectPtr->y += SPACING;
-			break;
-		default:
-			break;
-		}
-	}
 }
