@@ -4,8 +4,8 @@
 int screenIndex = 0;
 
 // 버퍼의 크기
-const int width = 100 * 2;
-const int height = 60;
+const int width = 40 * 2;
+const int height = 24;
 
 // 버퍼 생성 (2개)
 HANDLE Screen[2];	// [0] front buffer
@@ -13,6 +13,8 @@ HANDLE Screen[2];	// [0] front buffer
 
 void ScreenInit()
 {
+	system("mode con cols=80 lines=24");
+
 	CONSOLE_CURSOR_INFO cursor;
 
 	// 버퍼의 가로 사이즈, 세로 사이즈
