@@ -2,130 +2,130 @@
 
 #include "Double_Buffering.h"
 
-char GameMap[HEIGTH][WIDTH + 1];
-char Tetrises[7][4][4][5] = {
+char gameMap[HEIGTH][WIDTH + 1];
+char tetrominos[7][4][4][5] = {
 	// J Block
 	{
 		{
+			"0000",
 			"4000",
 			"4440",
-			"0000",
 			"0000"
 		},{
+			"0000",
 			"0440",
 			"0400",
-			"0400",
-			"0000"
+			"0400"
 		},{
+			"0000",
 			"0000",
 			"4440",
 			"0040",
-			"0000"
 		},{
+			"0000",
 			"0400",
 			"0400",
-			"4400",
-			"0000"
+			"4400"
 		},
 	},
 
 	// L Block
 	{
 		{
+			"0000",
 			"0040",
 			"4440",
+			"0000"
+		},{
 			"0000",
-			"0000"
-		},{
 			"0400",
 			"0400",
-			"0440",
-			"0000"
+			"0440"
 		},{
+			"0000",
 			"0000",
 			"4440",
-			"4000",
-			"0000"
+			"4000"
 		},{
+			"0000",
 			"4400",
 			"0400",
-			"0400",
-			"0000"
+			"0400"
 		},
 	},
 
 	// S Block
 	{
 		{
+			"0000",
 			"0440",
 			"4400",
-			"0000",
 			"0000"
 		},{
+			"0000",
 			"0400",
 			"0440",
-			"0040",
-			"0000"
+			"0040"
 		},{
 			"0000",
+			"0000",
 			"0440",
-			"4400",
-			"0000"
+			"4400"
 		},{
+			"0000",
 			"4000",
 			"4400",
-			"0400",
-			"0000"
+			"0400"
 		},
 	},
 
 	// Z Block
 	{
 		{
+			"0000",
 			"4400",
 			"0440",
-			"0000",
 			"0000"
 		},{
+			"0000",
 			"0040",
 			"0440",
-			"0400",
-			"0000"
+			"0400"
 		},{
 			"0000",
+			"0000",
 			"4400",
-			"0440",
-			"0000"
+			"0440"
 		},{
+			"0000",
 			"0400",
 			"4400",
-			"4000",
-			"0000"
+			"4000"
 		},
 	},
 
 	// T Block
 	{
 		{
+			"0000",
 			"0400",
 			"4440",
-			"0000",
 			"0000"
 		},{
+			"0000",
 			"0400",
 			"0440",
-			"0400",
-			"0000"
+			"0400"
 		},{
 			"0000",
+			"0000",
 			"4440",
-			"0400",
-			"0000"
+			"0400"
 		},{
+			"0000",
 			"0400",
 			"4400",
-			"0400",
-			"0000"
+			"0400"
 		},
 	},
 
@@ -180,10 +180,51 @@ char Tetrises[7][4][4][5] = {
 	},
 };
 
-Pos holdMapPos = { 1, 1 }, gameMapPos = { 6, 1 }, nextMapPos = { 17, 1 };
+char scoreString[100], lineString[100];
+
+Pos iSRSCoord[8][5] = {
+	{
+		{0,0},{-2,0},{+1,0},{-2,-1},{+1,+2}
+	},{
+		{0,0},{+2,0},{-1,0},{+2,+1},{-1,-2}
+	},{
+		{0,0},{-1,0},{+2,0},{-1,+2},{+2,-1}
+	},{
+		{0,0},{+1,0},{-2,0},{+1,-2},{-2,+1}
+	},{
+		{0,0},{+2,0},{-1,0},{+2,+1},{-1,-2}
+	},{
+		{0,0},{-2,0},{+1,0},{-2,-1},{+1,+2}
+	},{
+		{0,0},{+1,0},{-2,0},{+1,-2},{-2,+1}
+	},{
+		{0,0},{-1,0},{+2,0},{-1,+2},{+2,-1}
+	}
+};
+Pos otherSRSCoord[8][5] = {
+	{
+		{0,0},{-1,0},{-1,+1},{0,-2},{-1,-2}
+	},{
+		{0,0},{+1,0},{+1,-1},{0,+2},{+1,+2}
+	},{
+		{0,0},{+1,0},{+1,-1},{0,+2},{+1,+2}
+	},{
+		{0,0},{-1,0},{-1,+1},{0,-2},{-1,-2}
+	},{
+		{0,0},{+1,0},{+1,+1},{0,-2},{+1,-2}
+	},{
+		{0,0},{-1,0},{-1,-1},{0,+2},{-1,+2}
+	},{
+		{0,0},{-1,0},{-1,-1},{0,+2},{-1,+2}
+	},{
+		{0,0},{+1,0},{+1,+1},{0,-2},{+1,-2}
+	}
+};
+Pos holdMapPos = { 1, 1 }, gameMapPos = { 6, 1 }, nextMapPos = { 17, 1 }, scorePos = { 22, 1 }, blockStartPos = { 4, 0 };
 
 clock_t prevClock, currClock, dropDelay = 1;
 
+unsigned score, lines;
 bool isGameOver;
 
 std::queue<Player> nextTetris;
@@ -197,8 +238,12 @@ int main()
 
 	clock_t dropTimer = 0;
 
-	while (!isGameOver)
+	while (true)
 	{
+		while (isGameOver)
+		{
+			Keyboard(player);
+		}
 		dropTimer += DeltaTime();
 		GamePrint(player);
 		MoveTetris(player, dropTimer);
@@ -232,9 +277,8 @@ int CreateBType()
 
 Player CreateNewTetris()
 {
-	Pos blockStart = { 4, 1 };
 	Tetris newTetris = { CreateBType(), 0 };
-	Player newPlayer = { blockStart, newTetris };
+	Player newPlayer = { blockStartPos, newTetris };
 	return newPlayer;
 }
 
@@ -244,16 +288,16 @@ void GameInit()
 	ScreenInit();
 	srand((unsigned)time(NULL));
 
-	isGameOver = 0;
+	isGameOver = score = lines = 0;
 
 	for (int i = 0; i < HEIGTH; i++)
-		strcpy_s(GameMap[i], "33333333333333333333333333333333333333");
+		strcpy_s(gameMap[i], "33333333333333333333333333333333333333");
 
 	for (int i = 0; i < TETRIS_DRAW; i++)
 	{
 		for (int j = 0; j < TETRIS_DRAW; j++)
 		{
-			GameMap[holdMapPos.x + i][holdMapPos.y + j] = EMPTY;
+			gameMap[holdMapPos.x + i][holdMapPos.y + j] = EMPTY;
 		}
 	}
 
@@ -261,17 +305,17 @@ void GameInit()
 	{
 		for (int j = 0; j < GAME_WIDTH; j++)
 		{
-			GameMap[gameMapPos.y + i][gameMapPos.x + j] = EMPTY;
+			gameMap[gameMapPos.y + i][gameMapPos.x + j] = EMPTY;
 		}
 	}
 
-	/*for (int i = 0; i < GAME_HEIGHT; i++)
+	for (int i = 0; i < SCORE_HEIGHT; i++)
 	{
-		for (int j = 0; j < TETRIS_DRAW; j++)
+		for (int j = 0; j < SCORE_WIDTH; j++)
 		{
-			GameMap[nextMapPos.y + i][nextMapPos.x + j] = EMPTY;
+			gameMap[scorePos.y + i][scorePos.x + j] = EMPTY;
 		}
-	}*/
+	}
 
 	for (int n = 0; n < NEXT_MAX; n++)
 	{
@@ -282,7 +326,7 @@ void GameInit()
 		{
 			for (int j = 0; j < TETRIS_DRAW; j++)
 			{
-				GameMap[nextMapPos.y + 4 * n + i][nextMapPos.x + j] = Tetrises[newTetris.status.bType][newTetris.status.bRotate][i][j];
+				gameMap[nextMapPos.y + 4 * n + i][nextMapPos.x + j] = tetrominos[newTetris.status.bType][newTetris.status.bRotate][i][j];
 			}
 		}
 	}
@@ -297,7 +341,7 @@ void GamePrint(Player player)
 	{
 		for (int j = 0; j < WIDTH; j++)
 		{
-			cell = GameMap[i][j];
+			cell = gameMap[i][j];
 
 			switch (cell)
 			{
@@ -325,12 +369,24 @@ void GamePrint(Player player)
 	{
 		for (int j = 0; j < TETRIS_DRAW; j++)
 		{
-			if (Tetrises[player.status.bType][player.status.bRotate][i][j] == BLOCK_MOVE)
+			if (tetrominos[player.status.bType][player.status.bRotate][i][j] == BLOCK_MOVE)
 			{
 				ScreenPrint(gameMapPos.x + player.pos.x + j, gameMapPos.y + player.pos.y + i, "бс");
 			}
 		}
 	}
+
+	TextColor(WHITE);
+	sprintf_s(scoreString, "%d", score);
+	ScreenPrint(scorePos.x + BEZEL, scorePos.y + BEZEL, " Score\t:");
+	ScreenPrint(scorePos.x +BEZEL + 7, scorePos.y + BEZEL, scoreString);
+
+	sprintf_s(lineString, "%d", lines);
+	ScreenPrint(scorePos.x + BEZEL, scorePos.y + BEZEL + 1, " Line\t:");
+	ScreenPrint(scorePos.x + BEZEL + 7, scorePos.y + BEZEL + 1, lineString);
+
+	ScreenPrint(scorePos.x + BEZEL, scorePos.y + BEZEL + 3, "  00 : 00 : 00");
+
 }
 
 void UpdateNextTetris()
@@ -338,14 +394,14 @@ void UpdateNextTetris()
 	for (int n = 1; n < NEXT_MAX; n++)
 		for (int i = 0; i < TETRIS_DRAW; i++)
 			for (int j = 0; j < TETRIS_DRAW; j++)
-				GameMap[nextMapPos.y + 4 * (n - 1) + i][nextMapPos.x + j] = GameMap[nextMapPos.y + 4 * n + i][nextMapPos.x + j];
+				gameMap[nextMapPos.y + 4 * (n - 1) + i][nextMapPos.x + j] = gameMap[nextMapPos.y + 4 * n + i][nextMapPos.x + j];
 
 	nextTetris.pop();
 	Player newTetris = CreateNewTetris();
 	nextTetris.push(newTetris);
 	for (int i = 0; i < TETRIS_DRAW; i++)
 		for (int j = 0; j < TETRIS_DRAW; j++)
-			GameMap[nextMapPos.y + 4 * (NEXT_MAX - 1) + i][nextMapPos.x + j] = Tetrises[newTetris.status.bType][newTetris.status.bRotate][i][j];
+			gameMap[nextMapPos.y + 4 * (NEXT_MAX - 1) + i][nextMapPos.x + j] = tetrominos[newTetris.status.bType][newTetris.status.bRotate][i][j];
 }
 
 void UpdateTetris(Player& player)
@@ -365,23 +421,44 @@ void Keyboard(Player& player)
 		if (key == -32)
 			key = _getch();
 
-		switch (key)
+		if (!isGameOver)
 		{
-		case UP:
-			RotationTetris(player.status.bRotate);
-			break;
-		case LEFT:
-			playerPos.x--;
-			break;
-		case RIGHT:
-			playerPos.x++;
-			break;
-		case DOWN:
-			playerPos.y++;
-			break;
-		default:
-			break;
+			switch (key)
+			{
+			case UP:
+				RotationTetris(player.status.bRotate);
+				break;
+			case LEFT:
+				playerPos.x--;
+				break;
+			case RIGHT:
+				playerPos.x++;
+				break;
+			case DOWN:
+				playerPos.y++;
+				break;
+			default:
+				break;
+			}
 		}
+		else
+		{
+			switch (key)
+			{
+			case 'r':
+			case 'R':
+				isGameOver = 0;
+				while (!nextTetris.empty())
+					nextTetris.pop();
+
+				GameInit();
+				player = CreateNewTetris();
+				break;
+			default:
+				break;
+			}
+		}
+		
 	}
 }
 
@@ -417,10 +494,40 @@ void RotationTetris(int& rotate)
 
 void SRSSystem(Player& player, int prevRotate)
 {
-	if (isCollide(player))
+	Player testPlayer;
+	if (player.status.bType < 5)
 	{
-		player.status.bRotate = prevRotate;
+		for (int i = 0; i < 5; i++)
+		{
+			testPlayer = player;
+			testPlayer.pos.x += otherSRSCoord[player.status.bRotate * 2][i].x;
+			testPlayer.pos.y += otherSRSCoord[player.status.bRotate * 2][i].y;
+			if (!isCollide(testPlayer))
+			{
+				player.pos.x = testPlayer.pos.x;
+				player.pos.y = testPlayer.pos.y;
+				return;
+			}
+		}
 	}
+	else
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			testPlayer = player;
+			testPlayer.pos.x += iSRSCoord[player.status.bRotate * 2][i].x;
+			testPlayer.pos.y += iSRSCoord[player.status.bRotate * 2][i].y;
+			if (!isCollide(testPlayer))
+			{
+				player.pos.x = testPlayer.pos.x;
+				player.pos.y = testPlayer.pos.y;
+				return;
+			}
+
+		}
+	}
+
+	player.status.bRotate = prevRotate;
 }
 
 
@@ -431,7 +538,7 @@ bool isCollide(Player player)
 	{
 		for (int j = 0; j < TETRIS_DRAW; j++)
 		{
-			if (Tetrises[player.status.bType][player.status.bRotate][i][j] == BLOCK_MOVE && GameMap[collidePos.y + i][collidePos.x + j] > EMPTY)
+			if (tetrominos[player.status.bType][player.status.bRotate][i][j] == BLOCK_MOVE && gameMap[collidePos.y + i][collidePos.x + j] > EMPTY)
 			{
 				return true;
 			}
@@ -444,8 +551,8 @@ void StopTetris(Player &player)
 {
 	for (int i = 0; i < TETRIS_DRAW; i++)
 		for (int j = 0; j < TETRIS_DRAW; j++)
-			if (Tetrises[player.status.bType][player.status.bRotate][i][j] == BLOCK_MOVE)
-				GameMap[gameMapPos.y + player.pos.y + i - BEZEL][gameMapPos.x + player.pos.x + j - BEZEL] = BLOCK_STOP;
+			if (tetrominos[player.status.bType][player.status.bRotate][i][j] == BLOCK_MOVE)
+				gameMap[gameMapPos.y + player.pos.y + i - BEZEL][gameMapPos.x + player.pos.x + j - BEZEL] = BLOCK_STOP;
 
 
 	GameLogic(player);
@@ -481,8 +588,14 @@ void CollideCheck(Player& player, Player prevStatus)
 
 void GameOverCheck(Player player)
 {
-	if (player.pos.y == 1)
+	if (player.pos.y == blockStartPos.y)
+	{
 		isGameOver = 1;
+		TextColor(RED);
+		ScreenPrint(gameMapPos.x + 5, gameMapPos.y + 10, "Game Over...");
+		TextColor(RED);
+		ScreenPrint(gameMapPos.x + 2, gameMapPos.y + 11, "Press R Key To Restart");
+	}
 }
 
 void LineClearCheck(Player player)
@@ -492,7 +605,7 @@ void LineClearCheck(Player player)
 	{
 		cnt = 0;
 		for (int j = 0; j < GAME_WIDTH; j++)
-			if (GameMap[gameMapPos.y + player.pos.y + i - BEZEL][gameMapPos.x + j] == BLOCK_STOP)
+			if (gameMap[gameMapPos.y + player.pos.y + i - BEZEL][gameMapPos.x + j] == BLOCK_STOP)
 				++cnt;
 
 		if (cnt == 10)
@@ -502,25 +615,28 @@ void LineClearCheck(Player player)
 			{
 				cnt = 0;
 				for (int j = 0; j < GAME_WIDTH; j++)
-					if (GameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x  + j] == EMPTY)
+					if (gameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x  + j] == EMPTY)
 						++cnt;
 
 				if (cnt != 10)
 				{
 					for (int j = 0; j < GAME_WIDTH; j++)
-						if (GameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x + j] < FLOOR)
-							GameMap[gameMapPos.y + player.pos.y + i - k - BEZEL + 1][gameMapPos.x + j] =
-								GameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x + j];
+						if (gameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x + j] < FLOOR)
+							gameMap[gameMapPos.y + player.pos.y + i - k - BEZEL + 1][gameMapPos.x + j] =
+								gameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x + j];
 				}
 				else
 				{
 					for (int j = 0; j < GAME_WIDTH; j++)
-						GameMap[gameMapPos.y + player.pos.y + i - k - BEZEL + 1][gameMapPos.x + j] = EMPTY;
+						gameMap[gameMapPos.y + player.pos.y + i - k - BEZEL + 1][gameMapPos.x + j] = EMPTY;
 					break;
 				}
 			}
 		}
 	}
+
+	score += lineCnt * lineCnt;
+	lines += lineCnt;
 }
 
 void GameLogic(Player player)
