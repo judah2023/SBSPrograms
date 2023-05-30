@@ -90,3 +90,9 @@ void ScreenPrint(int x, int y, const char* string)
 		&dw,
 		nullptr);
 }
+
+
+void TextColor(int color)
+{
+	SetConsoleTextAttribute(Screen[screenIndex], color);
+}

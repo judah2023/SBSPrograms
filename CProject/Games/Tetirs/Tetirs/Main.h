@@ -1,7 +1,7 @@
 #pragma once
 
 #include <time.h>
-#include <queue>;
+#include <queue>
 
 enum COLORS
 {
@@ -68,26 +68,26 @@ struct Player
 	Tetris status;
 };
 
+clock_t DeltaTime();
 int CreateBType();
-
 Player CreateNewTetris();
 
-clock_t DeltaTime();
-
-void MoveTetris(Player &player, clock_t &dropTimer);
-
-void DropTetris(Player& player);
+void GameInit();
+void GamePrint(Player player);
+void UpdateNextTetris();
+void UpdateTetris(Player& player);
 
 void Keyboard(Player& player);
-
-bool isCollide(Player player);
-
-void StopTetris(Player &player);
+void MoveTetris(Player &player, clock_t &dropTimer);
+void DropTetris(Player& player);
 
 void RotationTetris(int &rotate);
-
 void SRSSystem(Player& player, int prevrotate);
 
-void GameInit();
+bool isCollide(Player player);
+void StopTetris(Player &player);
+void CollideCheck(Player& player, Player prevStatus);
 
-void GamePrint(Player player);
+void GameOverCheck(Player player);
+void LineClearCheck(Player player);
+void GameLogic(Player player);

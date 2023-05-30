@@ -184,7 +184,9 @@ Pos holdMapPos = { 1, 1 }, gameMapPos = { 6, 1 }, nextMapPos = { 17, 1 };
 
 clock_t prevClock, currClock, dropDelay = 1;
 
-std::queue<Tetris> nextTetris;
+bool isGameOver;
+
+std::queue<Player> nextTetris;
 
 int main()
 {
@@ -195,11 +197,11 @@ int main()
 
 	clock_t dropTimer = 0;
 
-	while (true)
+	while (!isGameOver)
 	{
 		dropTimer += DeltaTime();
-		MoveTetris(player, dropTimer);
 		GamePrint(player);
+		MoveTetris(player, dropTimer);
 	
 
 		// 버퍼 교체
@@ -212,6 +214,15 @@ int main()
 	// 종료 시, 버퍼를 해제
 	ScreenRelease();
 	return 0;
+}
+
+clock_t DeltaTime()
+{
+	clock_t deltaTime = currClock - prevClock;
+	prevClock = currClock;
+	currClock = clock();
+
+	return deltaTime;
 }
 
 int CreateBType()
@@ -227,56 +238,122 @@ Player CreateNewTetris()
 	return newPlayer;
 }
 
-clock_t DeltaTime()
+
+void GameInit()
 {
-	clock_t deltaTime = currClock - prevClock;
-	prevClock = currClock;
-	currClock = clock();
+	ScreenInit();
+	srand((unsigned)time(NULL));
 
-	return deltaTime;
-}
+	isGameOver = 0;
 
-void MoveTetris(Player& player, clock_t& dropTimer)
-{
-	Pos prevPos = player.pos;
-	int prevRotate = player.status.bRotate;
-	Keyboard(player);
+	for (int i = 0; i < HEIGTH; i++)
+		strcpy_s(GameMap[i], "33333333333333333333333333333333333333");
 
-	if (player.status.bRotate != prevRotate)
+	for (int i = 0; i < TETRIS_DRAW; i++)
 	{
-		SRSSystem(player, prevRotate);
-	}
-	else
-	{
-		if (isCollide(player))
+		for (int j = 0; j < TETRIS_DRAW; j++)
 		{
-			player.pos = prevPos;
-			if (player.pos.y > prevPos.y)
+			GameMap[holdMapPos.x + i][holdMapPos.y + j] = EMPTY;
+		}
+	}
+
+	for (int i = 0; i < GAME_HEIGHT; i++)
+	{
+		for (int j = 0; j < GAME_WIDTH; j++)
+		{
+			GameMap[gameMapPos.y + i][gameMapPos.x + j] = EMPTY;
+		}
+	}
+
+	/*for (int i = 0; i < GAME_HEIGHT; i++)
+	{
+		for (int j = 0; j < TETRIS_DRAW; j++)
+		{
+			GameMap[nextMapPos.y + i][nextMapPos.x + j] = EMPTY;
+		}
+	}*/
+
+	for (int n = 0; n < NEXT_MAX; n++)
+	{
+		Player newTetris = CreateNewTetris();
+		nextTetris.push(newTetris);
+
+		for (int i = 0; i < TETRIS_DRAW; i++)
+		{
+			for (int j = 0; j < TETRIS_DRAW; j++)
 			{
-				StopTetris(player);
+				GameMap[nextMapPos.y + 4 * n + i][nextMapPos.x + j] = Tetrises[newTetris.status.bType][newTetris.status.bRotate][i][j];
 			}
 		}
 	}
 
-	if (dropTimer >= dropDelay * 1000)
-	{
-		DropTetris(player);
-		dropTimer = 0;
-	}
+	currClock = clock();
 }
 
-void DropTetris(Player& player)
+void GamePrint(Player player)
 {
-	Pos prevPos = player.pos;
-
-	player.pos.y++;
-
-	if (isCollide(player))
+	char cell;
+	for (int i = 0; i < HEIGTH; i++)
 	{
-		player.pos = prevPos;
-		StopTetris(player);
+		for (int j = 0; j < WIDTH; j++)
+		{
+			cell = GameMap[i][j];
+
+			switch (cell)
+			{
+			case EMPTY:
+				ScreenPrint(j + BEZEL, i + BEZEL, " ");
+				break;
+			case BLOCK_STOP:
+			case BLOCK_MOVE:
+				TextColor(PURPLE);
+				ScreenPrint(j + BEZEL, i + BEZEL, "■");
+				break;
+			case FLOOR:
+			case WALL:
+				TextColor(10);
+				ScreenPrint(j + BEZEL, i + BEZEL, "▣");
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	TextColor(JADE);
+	for (int i = 0; i < TETRIS_DRAW; i++)
+	{
+		for (int j = 0; j < TETRIS_DRAW; j++)
+		{
+			if (Tetrises[player.status.bType][player.status.bRotate][i][j] == BLOCK_MOVE)
+			{
+				ScreenPrint(gameMapPos.x + player.pos.x + j, gameMapPos.y + player.pos.y + i, "■");
+			}
+		}
 	}
 }
+
+void UpdateNextTetris()
+{
+	for (int n = 1; n < NEXT_MAX; n++)
+		for (int i = 0; i < TETRIS_DRAW; i++)
+			for (int j = 0; j < TETRIS_DRAW; j++)
+				GameMap[nextMapPos.y + 4 * (n - 1) + i][nextMapPos.x + j] = GameMap[nextMapPos.y + 4 * n + i][nextMapPos.x + j];
+
+	nextTetris.pop();
+	Player newTetris = CreateNewTetris();
+	nextTetris.push(newTetris);
+	for (int i = 0; i < TETRIS_DRAW; i++)
+		for (int j = 0; j < TETRIS_DRAW; j++)
+			GameMap[nextMapPos.y + 4 * (NEXT_MAX - 1) + i][nextMapPos.x + j] = Tetrises[newTetris.status.bType][newTetris.status.bRotate][i][j];
+}
+
+void UpdateTetris(Player& player)
+{
+	player = nextTetris.front();
+	UpdateNextTetris();
+}
+
 
 void Keyboard(Player& player)
 {
@@ -308,6 +385,45 @@ void Keyboard(Player& player)
 	}
 }
 
+void MoveTetris(Player& player, clock_t& dropTimer)
+{
+	Player prevStatus = player;
+	Keyboard(player);
+
+	CollideCheck(player, prevStatus);
+
+	if (dropTimer >= dropDelay * 1000)
+	{
+		DropTetris(player);
+		dropTimer = 0;
+	}
+}
+
+void DropTetris(Player& player)
+{
+	Player prevStatus = player;
+	Pos prevPos = player.pos;
+
+	player.pos.y++;
+
+	CollideCheck(player, prevStatus);
+}
+
+
+void RotationTetris(int& rotate)
+{
+	rotate = ++rotate % 4;
+}
+
+void SRSSystem(Player& player, int prevRotate)
+{
+	if (isCollide(player))
+	{
+		player.status.bRotate = prevRotate;
+	}
+}
+
+
 bool isCollide(Player player)
 {
 	Pos collidePos = { gameMapPos.x + player.pos.x - BEZEL ,gameMapPos.y + player.pos.y - BEZEL };
@@ -327,116 +443,88 @@ bool isCollide(Player player)
 void StopTetris(Player &player)
 {
 	for (int i = 0; i < TETRIS_DRAW; i++)
-	{
 		for (int j = 0; j < TETRIS_DRAW; j++)
-		{
 			if (Tetrises[player.status.bType][player.status.bRotate][i][j] == BLOCK_MOVE)
+				GameMap[gameMapPos.y + player.pos.y + i - BEZEL][gameMapPos.x + player.pos.x + j - BEZEL] = BLOCK_STOP;
+
+
+	GameLogic(player);
+	UpdateTetris(player);
+}
+
+void CollideCheck(Player& player, Player prevStatus)
+{
+	Pos prevPos = prevStatus.pos;
+	int prevRotate = prevStatus.status.bRotate;
+
+	if (player.status.bRotate != prevRotate)
+	{
+		SRSSystem(player, prevRotate);
+	}
+	else
+	{
+		if (isCollide(player))
+		{
+			if (player.pos.y > prevPos.y)
 			{
-				GameMap[gameMapPos.y + player.pos.y + i - 1][gameMapPos.x + player.pos.x + j - 1] = BLOCK_STOP;
+				player.pos = prevPos;
+				StopTetris(player);
+			}
+			else
+			{
+				player.pos = prevPos;
 			}
 		}
 	}
-
-	player = CreateNewTetris();
 }
 
-void RotationTetris(int& rotate)
+
+void GameOverCheck(Player player)
 {
-	rotate = ++rotate % 4;
+	if (player.pos.y == 1)
+		isGameOver = 1;
 }
 
-void SRSSystem(Player& player, int prevRotate)
+void LineClearCheck(Player player)
 {
-	if (isCollide(player))
-	{
-		player.status.bRotate = prevRotate;
-	}
-}
-
-void GameInit()
-{
-	ScreenInit();
-	srand((unsigned)time(NULL));
-
-	for (int i = 0; i < HEIGTH; i++)
-		strcpy_s(GameMap[i], "33333333333333333333333333333333333333");
-
+	int cnt, lineCnt = 0;
 	for (int i = 0; i < TETRIS_DRAW; i++)
 	{
-		for (int j = 0; j < TETRIS_DRAW; j++)
-		{
-			GameMap[holdMapPos.x + i][holdMapPos.y + j] = EMPTY;
-		}
-	}
-
-	for (int i = 0; i < GAME_HEIGHT; i++)
-	{
+		cnt = 0;
 		for (int j = 0; j < GAME_WIDTH; j++)
-		{
-			GameMap[gameMapPos.y + i][gameMapPos.x + j] = EMPTY;
-		}
-	}
+			if (GameMap[gameMapPos.y + player.pos.y + i - BEZEL][gameMapPos.x + j] == BLOCK_STOP)
+				++cnt;
 
-	for (int i = 0; i < GAME_HEIGHT; i++)
-	{
-		for (int j = 0; j < TETRIS_DRAW; j++)
+		if (cnt == 10)
 		{
-			GameMap[nextMapPos.y + i][nextMapPos.x + j] = EMPTY;
-		}
-	}
-
-	for (int n = 0; n < NEXT_MAX; n++)
-	{
-		Tetris newTetris = { CreateBType(), 0 };
-		
-		for (int i = 0; i < TETRIS_DRAW; i++)
-		{
-			for (int j = 0; j < TETRIS_DRAW; j++)
+			++lineCnt;
+			for (int k = 1; k < GAME_HEIGHT; k++)
 			{
-				GameMap[nextMapPos.y + 4 * n + i][nextMapPos.x + j] = Tetrises[newTetris.bType][newTetris.bRotate][i][j];
+				cnt = 0;
+				for (int j = 0; j < GAME_WIDTH; j++)
+					if (GameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x  + j] == EMPTY)
+						++cnt;
+
+				if (cnt != 10)
+				{
+					for (int j = 0; j < GAME_WIDTH; j++)
+						if (GameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x + j] < FLOOR)
+							GameMap[gameMapPos.y + player.pos.y + i - k - BEZEL + 1][gameMapPos.x + j] =
+								GameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x + j];
+				}
+				else
+				{
+					for (int j = 0; j < GAME_WIDTH; j++)
+						GameMap[gameMapPos.y + player.pos.y + i - k - BEZEL + 1][gameMapPos.x + j] = EMPTY;
+					break;
+				}
 			}
 		}
 	}
-
-	currClock = clock();
 }
 
-void GamePrint(Player player)
+void GameLogic(Player player)
 {
-	char cell;
-	for (int i = 0; i < HEIGTH; i++)
-	{
-		for (int j = 0; j < WIDTH; j++)
-		{
-			cell = GameMap[i][j];
-
-			switch (cell)
-			{
-			case EMPTY:
-				ScreenPrint(j + BEZEL, i + BEZEL, " ");
-				break;
-			case BLOCK_STOP:
-			case BLOCK_MOVE:
-				ScreenPrint(j + BEZEL, i + BEZEL, "■");
-				break;
-			case FLOOR:
-			case WALL:
-				ScreenPrint(j + BEZEL, i + BEZEL, "▣");
-				break;
-			default:
-				break;
-			}
-		}
-	}
-
-	for (int i = 0; i < TETRIS_DRAW; i++)
-	{
-		for (int j = 0; j < TETRIS_DRAW; j++)
-		{
-			if (Tetrises[player.status.bType][player.status.bRotate][i][j] == BLOCK_MOVE)
-			{
-				ScreenPrint(gameMapPos.x + player.pos.x + j, gameMapPos.y + player.pos.y + i, "■");
-			}
-		}
-	}
+	GameOverCheck(player);
+	LineClearCheck(player);
 }
