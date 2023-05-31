@@ -28,7 +28,11 @@ enum ARROW_KEYS
 	UP = 72,
 	LEFT = 75,
 	RIGHT = 77,
-	DOWN = 80
+	DOWN = 80,
+	SPACE = 32,
+
+	KEY_R = 'R',
+	KEY_r = 'r',
 };
 
 enum SIZE_CONSTANTS
@@ -82,8 +86,14 @@ int CreateBType();
 Player CreateNewTetris();
 COLORS GetTetrisColor(Player player);
 
+void LoadBestScore(const char * dataFileName);
+void MakeBestScore(const char* dataFileName);
+
 void GameInit();
 void GamePrint(Player player);
+void UpdataGameMap();
+void UpdataPlayer(Player player);
+void UpdateText();
 void UpdateNextTetris();
 void UpdateTetris(Player& player);
 
@@ -93,6 +103,8 @@ void DropTetris(Player& player);
 
 void RotationTetris(int &rotate);
 void SRSSystem(Player& player, int prevrotate);
+
+void HoldTetris(Player& player);
 
 bool isCollide(Player player);
 void StopTetris(Player &player);

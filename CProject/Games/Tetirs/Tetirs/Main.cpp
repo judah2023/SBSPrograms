@@ -184,7 +184,7 @@ char tetrominos[7][4][4][5] = {
 char gameMap[HEIGTH][WIDTH + 1];
 int  gameMapColor[HEIGTH][WIDTH];
 
-char scoreString[100], lineString[100];
+char scoreString[21], stringBuffer[50];
 
 Pos iSRSCoord[8][5] = {
 	{
@@ -227,11 +227,13 @@ Pos otherSRSCoord[8][5] = {
 Pos holdMapPos = { 1, 1 }, gameMapPos = { 6, 1 }, nextMapPos = { 17, 1 }, scorePos = { 22, 1 }, blockStartPos = { 4, 0 };
 
 clock_t prevClock, currClock, dropDelay = 1;
+time_t startTime;
 
-unsigned score, lines;
+unsigned bestScore, score, lines;
 bool isGameOver;
 
 std::queue<Player> nextTetris;
+Tetris holdTetris;
 
 int main()
 {
@@ -311,13 +313,43 @@ COLORS GetTetrisColor(Player player)
 	}
 }
 
+void LoadBestScore(const char* dataFileName)
+{
+	FILE* file;
+	fopen_s(&file, dataFileName, "r");
+	if (file == nullptr)
+	{
+		MakeBestScore(dataFileName);
+		fopen_s(&file, dataFileName, "r");
+		if (file == nullptr)
+			return;
+	}
+
+	fscanf_s(file, "%d", &bestScore);
+
+	fclose(file);
+}
+
+void MakeBestScore(const char* dataFileName)
+{
+	FILE* file;
+	fopen_s(&file, dataFileName, "w");
+	if (file == nullptr)
+		return;
+
+	fprintf_s(file, "%d", bestScore);
+
+	fclose(file);
+
+}
 
 void GameInit()
 {
 	ScreenInit();
 	srand((unsigned)time(NULL));
 
-	isGameOver = score = lines = 0;
+	bestScore = score = lines = isGameOver = 0;
+	LoadBestScore("BestScore\\data.txt");
 
 	for (int i = 0; i < HEIGTH; i++)
 	{
@@ -369,6 +401,9 @@ void GameInit()
 		}
 	}
 
+	holdTetris = { -1, 0 };
+
+	startTime = time(NULL);
 	currClock = clock();
 	PlaySound(TEXT("Sound\\tetrismusic.wav"), nullptr, SND_ASYNC | SND_LOOP);	// 반복 재생
 }
@@ -376,6 +411,13 @@ void GameInit()
 void GamePrint(Player player)
 {
 
+	UpdataGameMap();
+	UpdataPlayer(player);
+	UpdateText();
+}
+
+void UpdataGameMap()
+{
 	char cell;
 	int color;
 	for (int i = 0; i < HEIGTH; i++)
@@ -404,8 +446,11 @@ void GamePrint(Player player)
 			}
 		}
 	}
+}
 
-	color = GetTetrisColor(player);
+void UpdataPlayer(Player player)
+{
+	int color = GetTetrisColor(player);
 	TextColor(color);
 	for (int i = 0; i < TETRIS_DRAW; i++)
 	{
@@ -417,18 +462,45 @@ void GamePrint(Player player)
 			}
 		}
 	}
+}
 
+void UpdateText()
+{
 	TextColor(WHITE);
-	sprintf_s(scoreString, "%d", score);
-	ScreenPrint(scorePos.x + BEZEL, scorePos.y + BEZEL, " Score\t:");
-	ScreenPrint(scorePos.x +BEZEL + 7, scorePos.y + BEZEL, scoreString);
+	sprintf_s(scoreString, "%04d", bestScore);
+	strcpy_s(stringBuffer, " Best Score : ");
+	strcat_s(stringBuffer, scoreString);
+	ScreenPrint(scorePos.x + BEZEL, scorePos.y + BEZEL, stringBuffer);
 
-	sprintf_s(lineString, "%d", lines);
-	ScreenPrint(scorePos.x + BEZEL, scorePos.y + BEZEL + 1, " Line\t:");
-	ScreenPrint(scorePos.x + BEZEL + 7, scorePos.y + BEZEL + 1, lineString);
+	sprintf_s(scoreString, "%04d", score);
+	strcpy_s(stringBuffer, " Score\t  : ");
+	strcat_s(stringBuffer, scoreString);
+	ScreenPrint(scorePos.x + BEZEL, scorePos.y + BEZEL + 1, stringBuffer);
 
-	ScreenPrint(scorePos.x + BEZEL, scorePos.y + BEZEL + 3, "  00 : 00 : 00");
+	sprintf_s(scoreString, "%04d", lines);
+	strcpy_s(stringBuffer, " Line\t  : ");
+	strcat_s(stringBuffer, scoreString);
+	ScreenPrint(scorePos.x + BEZEL, scorePos.y + BEZEL + 2, stringBuffer);
 
+	time_t currTime = time(NULL);
+	time_t timer = currTime - startTime;
+
+	strcpy_s(stringBuffer, " Time : ");
+
+	sprintf_s(scoreString, " %02llu", timer / 3600);
+	strcat_s(stringBuffer, scoreString);
+	strcat_s(stringBuffer, " : ");
+
+	timer %= 3600;
+	sprintf_s(scoreString, "%02llu", timer / 60);
+	strcat_s(stringBuffer, scoreString);
+	strcat_s(stringBuffer, " : ");
+
+	timer %= 60;
+	sprintf_s(scoreString, "%02llu", timer);
+	strcat_s(stringBuffer, scoreString);
+
+	ScreenPrint(scorePos.x + BEZEL, scorePos.y + BEZEL + 4, stringBuffer);
 }
 
 void UpdateNextTetris()
@@ -487,6 +559,9 @@ void Keyboard(Player& player)
 			case DOWN:
 				playerPos.y++;
 				break;
+			case SPACE:
+				HoldTetris(player);
+				break;
 			default:
 				break;
 			}
@@ -495,8 +570,8 @@ void Keyboard(Player& player)
 		{
 			switch (key)
 			{
-			case 'r':
-			case 'R':
+			case KEY_R:
+			case KEY_r:
 				isGameOver = 0;
 				while (!nextTetris.empty())
 					nextTetris.pop();
@@ -580,6 +655,39 @@ void SRSSystem(Player& player, int prevRotate)
 	player.status.bRotate = prevRotate;
 }
 
+void HoldTetris(Player& player)
+{
+	int color = GetTetrisColor(player);
+	if (holdTetris.bType == -1)
+	{
+		holdTetris = player.status;
+		UpdateTetris(player);
+	}
+	else
+	{
+		Tetris tempStatus = holdTetris;
+		holdTetris = player.status;
+		player = { blockStartPos,tempStatus };
+	}
+
+	for (int i = 0; i < TETRIS_DRAW; i++)
+	{
+		for (int j = 0; j < TETRIS_DRAW; j++)
+		{
+			if (tetrominos[holdTetris.bType][holdTetris.bRotate][i][j] == BLOCK_MOVE)
+			{
+				gameMap[holdMapPos.x + i][holdMapPos.y + j] = BLOCK_STOP;
+				gameMapColor[holdMapPos.x + i][holdMapPos.y + j] = color;
+			}
+			else
+			{
+				gameMap[holdMapPos.x + i][holdMapPos.y + j] = EMPTY;
+				gameMapColor[holdMapPos.x + i][holdMapPos.y + j] = BLACK;
+			}
+		}
+	}
+}
+
 
 bool isCollide(Player player)
 {
@@ -646,6 +754,7 @@ void GameOverCheck(Player player)
 	if (player.pos.y == blockStartPos.y)
 	{
 		isGameOver = 1;
+		MakeBestScore("BestScore\\data.txt");
 		TextColor(RED);
 		ScreenPrint(gameMapPos.x + 5, gameMapPos.y + 10, "Game Over...");
 		TextColor(RED);
@@ -700,6 +809,8 @@ void LineClearCheck(Player player)
 
 	score += lineCnt * lineCnt;
 	lines += lineCnt;
+	if (bestScore < score)
+		bestScore = score;
 }
 
 void GameLogic(Player player)
