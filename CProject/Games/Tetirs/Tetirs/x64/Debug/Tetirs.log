@@ -1,2 +1,30 @@
-﻿  Main.cpp
+﻿  DoubleBuffering.cpp
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\DoubleBuffering.cpp(83,29): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\DoubleBuffering.cpp(83,34): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\DoubleBuffering.cpp(91,10): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
+  Main.cpp
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  SoundManager.cpp
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(18,87): warning C4311: 'type cast': pointer truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(18,87): warning C4302: 'type cast': truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(21,78): warning C4311: 'type cast': pointer truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(21,78): warning C4302: 'type cast': truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(23,79): warning C4311: 'type cast': pointer truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(23,79): warning C4302: 'type cast': truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(30,93): warning C4311: 'type cast': pointer truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(30,93): warning C4302: 'type cast': truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(32,72): warning C4311: 'type cast': pointer truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(32,72): warning C4302: 'type cast': truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(33,75): warning C4311: 'type cast': pointer truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(33,75): warning C4302: 'type cast': truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(40,93): warning C4311: 'type cast': pointer truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(40,93): warning C4302: 'type cast': truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(42,72): warning C4311: 'type cast': pointer truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(42,72): warning C4302: 'type cast': truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(43,75): warning C4311: 'type cast': pointer truncation from 'LPVOID' to 'DWORD'
+C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\Tetirs\SoundManager.cpp(43,75): warning C4302: 'type cast': truncation from 'LPVOID' to 'DWORD'
+  Generating Code...
   Tetirs.vcxproj -> C:\Users\ngh75\Desktop\Programming\SBS\CProject\Games\Tetirs\x64\Debug\Tetirs.exe

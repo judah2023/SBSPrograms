@@ -1,6 +1,9 @@
 #include "Main.h"
 
-#include "Double_Buffering.h"
+#include "DoubleBuffering.h"
+
+#pragma comment(lib,"winmm.lib")
+#include <mmsystem.h>
 
 char gameMap[HEIGTH][WIDTH + 1];
 char tetrominos[7][4][4][5] = {
@@ -332,6 +335,7 @@ void GameInit()
 	}
 
 	currClock = clock();
+	PlaySound(TEXT("Sound\\tetrismusic.wav"), nullptr, SND_ASYNC | SND_LOOP);	// 반복 재생
 }
 
 void GamePrint(Player player)
