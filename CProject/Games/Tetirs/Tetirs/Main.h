@@ -6,14 +6,21 @@
 enum COLORS
 {
 	BLACK,
+	DARK_BLUE,
+	DARK_GREEN,
+	DARK_SKY_BLUE,
+	DARK_RED,
+	DARK_PURPLE,
+	DARK_YELLOW,
+	GRAY,
+	DARK_GRAY,
 	BLUE,
 	GREEN,
-	JADE,
+	SKY_BLUE,
 	RED,
 	PURPLE,
 	YELLOW,
-	GRAY,
-	WHITE
+	WHITE,
 };
 
 enum ARROW_KEYS
@@ -73,6 +80,7 @@ struct Player
 clock_t DeltaTime();
 int CreateBType();
 Player CreateNewTetris();
+COLORS GetTetrisColor(Player player);
 
 void GameInit();
 void GamePrint(Player player);

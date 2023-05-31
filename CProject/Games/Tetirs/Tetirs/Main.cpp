@@ -5,7 +5,6 @@
 #pragma comment(lib,"winmm.lib")
 #include <mmsystem.h>
 
-char gameMap[HEIGTH][WIDTH + 1];
 char tetrominos[7][4][4][5] = {
 	// J Block
 	{
@@ -182,6 +181,8 @@ char tetrominos[7][4][4][5] = {
 		},
 	},
 };
+char gameMap[HEIGTH][WIDTH + 1];
+int  gameMapColor[HEIGTH][WIDTH];
 
 char scoreString[100], lineString[100];
 
@@ -247,6 +248,7 @@ int main()
 		{
 			Keyboard(player);
 		}
+
 		dropTimer += DeltaTime();
 		GamePrint(player);
 		MoveTetris(player, dropTimer);
@@ -285,6 +287,30 @@ Player CreateNewTetris()
 	return newPlayer;
 }
 
+COLORS GetTetrisColor(Player player)
+{
+	int bType = player.status.bType;
+	switch (bType)
+	{
+	case 0:
+		return DARK_BLUE;
+	case 1:
+		return DARK_YELLOW;
+	case 2:
+		return GREEN;
+	case 3:
+		return DARK_RED;
+	case 4:
+		return DARK_PURPLE;
+	case 5:
+		return DARK_SKY_BLUE;
+	case 6:
+		return YELLOW;
+	default:
+		break;
+	}
+}
+
 
 void GameInit()
 {
@@ -294,13 +320,18 @@ void GameInit()
 	isGameOver = score = lines = 0;
 
 	for (int i = 0; i < HEIGTH; i++)
+	{
 		strcpy_s(gameMap[i], "33333333333333333333333333333333333333");
+		for (int j = 0; j < WIDTH; j++)
+			gameMapColor[i][j] = SKY_BLUE;
+	}
 
 	for (int i = 0; i < TETRIS_DRAW; i++)
 	{
 		for (int j = 0; j < TETRIS_DRAW; j++)
 		{
 			gameMap[holdMapPos.x + i][holdMapPos.y + j] = EMPTY;
+			gameMapColor[holdMapPos.x + i][holdMapPos.y + j] = BLACK;
 		}
 	}
 
@@ -309,6 +340,7 @@ void GameInit()
 		for (int j = 0; j < GAME_WIDTH; j++)
 		{
 			gameMap[gameMapPos.y + i][gameMapPos.x + j] = EMPTY;
+			gameMapColor[gameMapPos.y + i][gameMapPos.x + j] = BLACK;
 		}
 	}
 
@@ -317,6 +349,7 @@ void GameInit()
 		for (int j = 0; j < SCORE_WIDTH; j++)
 		{
 			gameMap[scorePos.y + i][scorePos.x + j] = EMPTY;
+			gameMapColor[scorePos.y + i][scorePos.x + j] = BLACK;
 		}
 	}
 
@@ -324,12 +357,14 @@ void GameInit()
 	{
 		Player newTetris = CreateNewTetris();
 		nextTetris.push(newTetris);
+		int color = GetTetrisColor(newTetris);
 
 		for (int i = 0; i < TETRIS_DRAW; i++)
 		{
 			for (int j = 0; j < TETRIS_DRAW; j++)
 			{
 				gameMap[nextMapPos.y + 4 * n + i][nextMapPos.x + j] = tetrominos[newTetris.status.bType][newTetris.status.bRotate][i][j];
+				gameMapColor[nextMapPos.y + 4 * n + i][nextMapPos.x + j] = color;
 			}
 		}
 	}
@@ -340,13 +375,17 @@ void GameInit()
 
 void GamePrint(Player player)
 {
+
 	char cell;
+	int color;
 	for (int i = 0; i < HEIGTH; i++)
 	{
 		for (int j = 0; j < WIDTH; j++)
 		{
 			cell = gameMap[i][j];
+			color = gameMapColor[i][j];
 
+			TextColor(color);
 			switch (cell)
 			{
 			case EMPTY:
@@ -354,13 +393,11 @@ void GamePrint(Player player)
 				break;
 			case BLOCK_STOP:
 			case BLOCK_MOVE:
-				TextColor(PURPLE);
-				ScreenPrint(j + BEZEL, i + BEZEL, "бс");
+				ScreenPrint(j + BEZEL, i + BEZEL, "в├");
 				break;
 			case FLOOR:
 			case WALL:
-				TextColor(10);
-				ScreenPrint(j + BEZEL, i + BEZEL, "в├");
+				ScreenPrint(j + BEZEL, i + BEZEL, "бс");
 				break;
 			default:
 				break;
@@ -368,14 +405,15 @@ void GamePrint(Player player)
 		}
 	}
 
-	TextColor(JADE);
+	color = GetTetrisColor(player);
+	TextColor(color);
 	for (int i = 0; i < TETRIS_DRAW; i++)
 	{
 		for (int j = 0; j < TETRIS_DRAW; j++)
 		{
 			if (tetrominos[player.status.bType][player.status.bRotate][i][j] == BLOCK_MOVE)
 			{
-				ScreenPrint(gameMapPos.x + player.pos.x + j, gameMapPos.y + player.pos.y + i, "бс");
+				ScreenPrint(gameMapPos.x + player.pos.x + j, gameMapPos.y + player.pos.y + i, "в├");
 			}
 		}
 	}
@@ -398,14 +436,22 @@ void UpdateNextTetris()
 	for (int n = 1; n < NEXT_MAX; n++)
 		for (int i = 0; i < TETRIS_DRAW; i++)
 			for (int j = 0; j < TETRIS_DRAW; j++)
+			{
 				gameMap[nextMapPos.y + 4 * (n - 1) + i][nextMapPos.x + j] = gameMap[nextMapPos.y + 4 * n + i][nextMapPos.x + j];
+				gameMapColor[nextMapPos.y + 4 * (n - 1) + i][nextMapPos.x + j] = gameMapColor[nextMapPos.y + 4 * n + i][nextMapPos.x + j];
+
+			}
 
 	nextTetris.pop();
 	Player newTetris = CreateNewTetris();
 	nextTetris.push(newTetris);
+	int color = GetTetrisColor(newTetris);
 	for (int i = 0; i < TETRIS_DRAW; i++)
 		for (int j = 0; j < TETRIS_DRAW; j++)
+		{
 			gameMap[nextMapPos.y + 4 * (NEXT_MAX - 1) + i][nextMapPos.x + j] = tetrominos[newTetris.status.bType][newTetris.status.bRotate][i][j];
+			gameMapColor[nextMapPos.y + 4 * (NEXT_MAX - 1) + i][nextMapPos.x + j] = color;
+		}
 }
 
 void UpdateTetris(Player& player)
@@ -553,10 +599,15 @@ bool isCollide(Player player)
 
 void StopTetris(Player &player)
 {
+	int color = GetTetrisColor(player);
 	for (int i = 0; i < TETRIS_DRAW; i++)
 		for (int j = 0; j < TETRIS_DRAW; j++)
 			if (tetrominos[player.status.bType][player.status.bRotate][i][j] == BLOCK_MOVE)
+			{
 				gameMap[gameMapPos.y + player.pos.y + i - BEZEL][gameMapPos.x + player.pos.x + j - BEZEL] = BLOCK_STOP;
+				gameMapColor[gameMapPos.y + player.pos.y + i - BEZEL][gameMapPos.x + player.pos.x + j - BEZEL] = color;
+
+			}
 
 
 	GameLogic(player);
@@ -626,13 +677,21 @@ void LineClearCheck(Player player)
 				{
 					for (int j = 0; j < GAME_WIDTH; j++)
 						if (gameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x + j] < FLOOR)
+						{
 							gameMap[gameMapPos.y + player.pos.y + i - k - BEZEL + 1][gameMapPos.x + j] =
 								gameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x + j];
+							gameMapColor[gameMapPos.y + player.pos.y + i - k - BEZEL + 1][gameMapPos.x + j] =
+								gameMapColor[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x + j];
+
+						}
 				}
 				else
 				{
 					for (int j = 0; j < GAME_WIDTH; j++)
+					{
 						gameMap[gameMapPos.y + player.pos.y + i - k - BEZEL + 1][gameMapPos.x + j] = EMPTY;
+						gameMapColor[gameMapPos.y + player.pos.y + i - k - BEZEL + 1][gameMapPos.x + j] = BLACK;
+					}
 					break;
 				}
 			}
