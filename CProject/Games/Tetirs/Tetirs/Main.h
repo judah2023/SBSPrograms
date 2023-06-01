@@ -33,6 +33,8 @@ enum ARROW_KEYS
 
 	KEY_R = 'R',
 	KEY_r = 'r',
+	KEY_Z = 'Z',
+	KEY_z = 'z'
 };
 
 enum SIZE_CONSTANTS

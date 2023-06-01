@@ -224,12 +224,13 @@ Pos otherSRSCoord[8][5] = {
 		{0,0},{+1,0},{+1,+1},{0,-2},{+1,-2}
 	}
 };
-Pos holdMapPos = { 1, 1 }, gameMapPos = { 6, 1 }, nextMapPos = { 17, 1 }, scorePos = { 22, 1 }, blockStartPos = { 4, 0 };
+Pos holdMapPos = { 1, 1 }, gameMapPos = { 6, 1 }, nextMapPos = { 17, 1 }, 
+	scorePos = { 22, 1 }, blockStartPos = { 4, 0 }, levelPos = { 1, 6 };
 
 clock_t prevClock, currClock, dropDelay = 1;
 time_t startTime;
 
-unsigned bestScore, score, lines;
+unsigned bestScore, score, lines, level;
 bool isGameOver;
 
 std::queue<Player> nextTetris;
@@ -246,21 +247,23 @@ int main()
 
 	while (true)
 	{
-		while (isGameOver)
+		while (!isGameOver)
 		{
-			Keyboard(player);
+			
+
+			dropTimer += DeltaTime();
+			GamePrint(player);
+			MoveTetris(player, dropTimer);
+
+			// 버퍼 교체
+			ScreenFlipping();
+
+			// 교체된 버퍼 비우기
+			ScreenClear();
 		}
 
-		dropTimer += DeltaTime();
-		GamePrint(player);
-		MoveTetris(player, dropTimer);
-	
-
-		// 버퍼 교체
-		ScreenFlipping();
-
-		// 교체된 버퍼 비우기
-		ScreenClear();
+		if (isGameOver)
+			Keyboard(player);
 	}
 
 	// 종료 시, 버퍼를 해제
@@ -349,6 +352,7 @@ void GameInit()
 	srand((unsigned)time(NULL));
 
 	bestScore = score = lines = isGameOver = 0;
+	level = 1;
 	LoadBestScore("BestScore\\data.txt");
 
 	for (int i = 0; i < HEIGTH; i++)
@@ -467,6 +471,12 @@ void UpdataPlayer(Player player)
 void UpdateText()
 {
 	TextColor(WHITE);
+
+	sprintf_s(scoreString, "%02d", level);
+	strcpy_s(stringBuffer, "Level ");
+	strcat_s(stringBuffer, scoreString);
+	ScreenPrint(levelPos.x + BEZEL, levelPos.y + BEZEL, stringBuffer);
+
 	sprintf_s(scoreString, "%04d", bestScore);
 	strcpy_s(stringBuffer, " Best Score : ");
 	strcat_s(stringBuffer, scoreString);
@@ -559,7 +569,8 @@ void Keyboard(Player& player)
 			case DOWN:
 				playerPos.y++;
 				break;
-			case SPACE:
+			case KEY_Z:
+			case KEY_z:
 				HoldTetris(player);
 				break;
 			default:
@@ -594,7 +605,7 @@ void MoveTetris(Player& player, clock_t& dropTimer)
 
 	CollideCheck(player, prevStatus);
 
-	if (dropTimer >= dropDelay * 1000)
+	if (dropTimer * level >= dropDelay * 1000)
 	{
 		DropTetris(player);
 		dropTimer = 0;
@@ -669,6 +680,7 @@ void HoldTetris(Player& player)
 		holdTetris = player.status;
 		player = { blockStartPos,tempStatus };
 	}
+	holdTetris.bRotate = 0;
 
 	for (int i = 0; i < TETRIS_DRAW; i++)
 	{
@@ -811,6 +823,8 @@ void LineClearCheck(Player player)
 	lines += lineCnt;
 	if (bestScore < score)
 		bestScore = score;
+
+	level = lines / 10 + 1;
 }
 
 void GameLogic(Player player)
