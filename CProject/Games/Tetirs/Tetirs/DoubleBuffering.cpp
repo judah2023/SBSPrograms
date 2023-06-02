@@ -13,8 +13,6 @@ HANDLE Screen[2];	// [0] front buffer
 
 void ScreenInit()
 {
-	system("mode con cols=80 lines=24");
-
 	CONSOLE_CURSOR_INFO cursor;
 
 	// 버퍼의 가로 사이즈, 세로 사이즈

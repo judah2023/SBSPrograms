@@ -91,7 +91,12 @@ COLORS GetTetrisColor(Player player);
 void LoadBestScore(const char * dataFileName);
 void MakeBestScore(const char* dataFileName);
 
-void GameInit();
+void ReadMapData(const char* MapFileName);
+
+void ShopInit();
+void ShopPrint();
+
+void GameInit(Player& player);
 void GamePrint(Player player);
 void UpdataGameMap();
 void UpdataPlayer(Player player);

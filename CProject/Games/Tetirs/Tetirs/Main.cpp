@@ -224,33 +224,46 @@ Pos otherSRSCoord[8][5] = {
 		{0,0},{+1,0},{+1,+1},{0,-2},{+1,-2}
 	}
 };
-Pos holdMapPos = { 1, 1 }, gameMapPos = { 6, 1 }, nextMapPos = { 17, 1 }, 
-	scorePos = { 22, 1 }, blockStartPos = { 4, 0 }, levelPos = { 1, 6 };
+Pos holdMapPos = { 1, 1 }, gameMapPos = { 6, 1 }, nextMapPos = { 17, 1 },
+scorePos = { 22, 1 }, blockStartPos = { 4, 0 }, levelPos = { 1, 6 };
 
 clock_t prevClock, currClock, dropDelay = 1;
 time_t startTime;
 
 unsigned bestScore, score, lines, level;
-bool isGameOver;
+bool isGameOver, isShop;
 
 std::queue<Player> nextTetris;
 Tetris holdTetris;
 
 int main()
 {
-	// 게임 초기화
-	GameInit();
+	srand((unsigned)time(NULL));
 
-	Player player = CreateNewTetris();
+	Player player;
 
-	clock_t dropTimer = 0;
 
 	while (true)
 	{
+		ShopInit();
+
+		while (!isShop)
+		{
+			ShopPrint();
+
+			// 버퍼 교체
+			ScreenFlipping();
+
+			// 교체된 버퍼 비우기
+			ScreenClear();
+		}
+
+		// 게임 초기화
+		GameInit(player);
+		clock_t dropTimer = 0;
+
 		while (!isGameOver)
 		{
-			
-
 			dropTimer += DeltaTime();
 			GamePrint(player);
 			MoveTetris(player, dropTimer);
@@ -262,8 +275,11 @@ int main()
 			ScreenClear();
 		}
 
-		if (isGameOver)
+		while (isGameOver)
 			Keyboard(player);
+
+		// 종료 시, 버퍼를 해제
+		ScreenRelease();
 	}
 
 	// 종료 시, 버퍼를 해제
@@ -316,6 +332,7 @@ COLORS GetTetrisColor(Player player)
 	}
 }
 
+
 void LoadBestScore(const char* dataFileName)
 {
 	FILE* file;
@@ -346,48 +363,86 @@ void MakeBestScore(const char* dataFileName)
 
 }
 
-void GameInit()
+
+void ReadMapData(const char* MapFileName)
+{
+	FILE* file;
+	fopen_s(&file, MapFileName, "r");
+	for (int i = 0; i < HEIGTH; i++)
+		fgets(gameMap[i], WIDTH + 2, file);
+
+	fclose(file);
+}
+
+
+void ShopInit()
+{
+	system("mode con cols=80 lines=24");
+	isShop = 1;
+	ScreenInit();
+
+	ReadMapData("MapData\\Shop.txt");
+
+	char cell;
+	for (int i = 0; i < HEIGTH; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+		{
+			cell = gameMap[i][j];
+			switch (cell)
+			{
+			case EMPTY:
+				gameMapColor[i][j] = BLACK;
+				break;
+			case WALL:
+				gameMapColor[i][j] = DARK_GREEN;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+}
+
+void ShopPrint()
+{
+	UpdataGameMap();
+}
+
+
+void GameInit(Player& player)
 {
 	ScreenInit();
-	srand((unsigned)time(NULL));
 
 	bestScore = score = lines = isGameOver = 0;
 	level = 1;
 	LoadBestScore("BestScore\\data.txt");
 
+	ReadMapData("MapData\\Game.txt");
+
+	char cell;
 	for (int i = 0; i < HEIGTH; i++)
 	{
-		strcpy_s(gameMap[i], "33333333333333333333333333333333333333");
 		for (int j = 0; j < WIDTH; j++)
-			gameMapColor[i][j] = SKY_BLUE;
-	}
-
-	for (int i = 0; i < TETRIS_DRAW; i++)
-	{
-		for (int j = 0; j < TETRIS_DRAW; j++)
 		{
-			gameMap[holdMapPos.x + i][holdMapPos.y + j] = EMPTY;
-			gameMapColor[holdMapPos.x + i][holdMapPos.y + j] = BLACK;
+			cell = gameMap[i][j];
+			switch (cell)
+			{
+			case EMPTY:
+				gameMapColor[i][j] = BLACK;
+				break;
+			case WALL:
+				gameMapColor[i][j] = SKY_BLUE;
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
-	for (int i = 0; i < GAME_HEIGHT; i++)
-	{
-		for (int j = 0; j < GAME_WIDTH; j++)
-		{
-			gameMap[gameMapPos.y + i][gameMapPos.x + j] = EMPTY;
-			gameMapColor[gameMapPos.y + i][gameMapPos.x + j] = BLACK;
-		}
-	}
-
-	for (int i = 0; i < SCORE_HEIGHT; i++)
-	{
-		for (int j = 0; j < SCORE_WIDTH; j++)
-		{
-			gameMap[scorePos.y + i][scorePos.x + j] = EMPTY;
-			gameMapColor[scorePos.y + i][scorePos.x + j] = BLACK;
-		}
-	}
+	while (!nextTetris.empty())
+		nextTetris.pop();
 
 	for (int n = 0; n < NEXT_MAX; n++)
 	{
@@ -405,6 +460,7 @@ void GameInit()
 		}
 	}
 
+	player = CreateNewTetris();
 	holdTetris = { -1, 0 };
 
 	startTime = time(NULL);
@@ -545,7 +601,7 @@ void UpdateTetris(Player& player)
 
 void Keyboard(Player& player)
 {
-	Pos &playerPos = player.pos;
+	Pos& playerPos = player.pos;
 	char key = 0;
 	if (_kbhit())
 	{
@@ -584,17 +640,12 @@ void Keyboard(Player& player)
 			case KEY_R:
 			case KEY_r:
 				isGameOver = 0;
-				while (!nextTetris.empty())
-					nextTetris.pop();
-
-				GameInit();
-				player = CreateNewTetris();
 				break;
 			default:
 				break;
 			}
 		}
-		
+
 	}
 }
 
@@ -717,7 +768,7 @@ bool isCollide(Player player)
 	return false;
 }
 
-void StopTetris(Player &player)
+void StopTetris(Player& player)
 {
 	int color = GetTetrisColor(player);
 	for (int i = 0; i < TETRIS_DRAW; i++)
@@ -791,7 +842,7 @@ void LineClearCheck(Player player)
 			{
 				cnt = 0;
 				for (int j = 0; j < GAME_WIDTH; j++)
-					if (gameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x  + j] == EMPTY)
+					if (gameMap[gameMapPos.y + player.pos.y + i - k - BEZEL][gameMapPos.x + j] == EMPTY)
 						++cnt;
 
 				if (cnt != 10)
