@@ -34,7 +34,18 @@ enum ARROW_KEYS
 	KEY_R = 'R',
 	KEY_r = 'r',
 	KEY_Z = 'Z',
-	KEY_z = 'z'
+	KEY_z = 'z',
+	
+	KEY_0 = '0',
+	KEY_1,
+	KEY_2,
+	KEY_3,
+	KEY_4,
+	KEY_5,
+	KEY_6,
+	KEY_7,
+	KEY_8,
+	KEY_9,
 };
 
 enum SIZE_CONSTANTS
@@ -47,22 +58,21 @@ enum SIZE_CONSTANTS
 	TETRIS_DRAW = 4,
 	NEXT_MAX = 5,
 	SCORE_WIDTH = 15,
-	SCORE_HEIGHT = 5
+	SCORE_HEIGHT = 5,
+	SHOP_MAX = 10,
+	INVENTORY_MAX = 7,
+	SCRIPT_SIZE = 50
 };
 
-enum TETRIS_STATUS
+enum MAP_STATUS
 {
 	EMPTY = '0',
 	BLOCK_STOP,
 	FLOOR,
 	WALL,
 	BLOCK_MOVE,
-};
-
-enum MOVE_STATUS
-{
-	ROTATING = 0,
-	MOVING = 1
+	ICON_ITEM,
+	ICON_SYSTEM,
 };
 
 struct Pos
@@ -83,24 +93,63 @@ struct Player
 	Tetris status;
 };
 
+typedef  void (*ItemFunction)();
+
+struct Item
+{
+	int mapStatus;
+	ItemFunction function;
+};
+
+struct Icon
+{
+	Pos pos;
+	Item item;
+	int Price;
+	char descrption[SCRIPT_SIZE];
+};
+
+struct GroupItem
+{
+	Item item;
+	int stock;
+};
+
 clock_t DeltaTime();
 int CreateBType();
 Player CreateNewTetris();
 COLORS GetTetrisColor(Player player);
+COLORS GetShopColor(int itemNum);
 
 void LoadBestScore(const char * dataFileName);
-void MakeBestScore(const char* dataFileName);
+void SaveBestScore(const char* dataFileName);
+
+void LoadInventory(const char* dataFileName);
+void SaveInventory(const char* dataFileName);
 
 void ReadMapData(const char* MapFileName);
 
-void ShopInit();
-void ShopPrint();
+void ItemInit();
+
+void ShopInit(Player& player);
+void ShopPrint(Player player);
+void ChooseItem(Player& player);
+void PrintScript(Player player);
+void SelectItem(Player player);
+
+void LineClear();
+void LineClear5();
+void LineClear10();
+void LevelUp();
+void LevelDown();
+void ExitShop();
 
 void GameInit(Player& player);
 void GamePrint(Player player);
 void UpdataGameMap();
 void UpdataPlayer(Player player);
 void UpdateText();
+void UpdataInventory();
 void UpdateNextTetris();
 void UpdateTetris(Player& player);
 
@@ -117,6 +166,11 @@ bool isCollide(Player player);
 void StopTetris(Player &player);
 void CollideCheck(Player& player, Player prevStatus);
 
-void GameOverCheck(Player player);
-void LineClearCheck(Player player);
+void GameOverLogic(Player player);
+bool IsClearLine(int lineNum);
+bool IsAboveBlock(int lineNum);
+void PullDownBlocks(int startRow);
+void UpdateScore(int lineCnt);
+void LineClearLogic(Player player);
+void UpdateScore(int lineCnt);
 void GameLogic(Player player);
