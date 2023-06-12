@@ -1,28 +1,30 @@
 #include <iostream>
 #include <algorithm>
-
+#include <vector>
+#include <string>
 using namespace std;
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    int a, b, c;
-    a = b = c = 1;
-    while (a == 0 && a == b && b == c)
-    {
-        cin >> a >> b >> c;
+	int n, k;
 
-        if (a > b)
-            swap(a, b);
-        if (b > c)
-            swap(b, c);
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cin >> n >> k;
+	vector<int> nList(n);
+	for (int i = 0; i < n; i++)
+		nList[i] = i + 1;
 
-        if (a * a + b * b == c * c)
-            cout << "right\n";
-        else
-            cout << "wrong\n";
-    }
+	size_t idx = 0;
+	cout << "<";
+	for (int i = n; i > 1; i--)
+	{
+		idx += (k - 1);
+		idx %= i;
+		cout << nList[idx] << ", ";
+		nList.erase(nList.begin() + idx);
+	}
+	cout << nList[0] << ">";
 
-    return 0;
+	return 0;
 }

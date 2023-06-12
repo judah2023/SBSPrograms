@@ -901,7 +901,6 @@ void Keyboard(Player& player)
 			case KEY_z:
 				HoldTetris(player);
 				break;
-			case KEY_0:
 			case KEY_1:
 			case KEY_2:
 			case KEY_3:
