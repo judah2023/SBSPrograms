@@ -1,120 +1,140 @@
 ﻿#include <iostream>
 
-// C	( 출력 : printf(), 입력 : scanf())
-// C++	( 출력 : std::cin, 입력 : std::cout)
+using namespace std;
 
-// 스트림
-// 시간의 흐름에 따라 연속적으로 발생하는 데이터의 흐름
-// 운영체제에 의해 스트림이 생성됨
+int data = 56;
 
-void Function(const int &x)
+#pragma region Namespace
+
+/*
+
+// 속성을 구분할 수 있도록 유효 범위를 설정하는 영역
+
+namespace A
 {
-	std::cout << "x의 값 : " << x << std::endl;
+	void Damage()
+	{
+		cout << "A::Damage() 호출" << endl;
+	}
 }
+
+namespace B
+{
+	void Damage()
+	{
+		cout << "B::Damage() 호출" << endl;
+	}
+}
+
+*/
+
+#pragma endregion
+
+#pragma region Class
+
+/*
+
+*/
+
+// 사용자 정의 데이터 유형
+// 속성과 함수가 포함됨
+// 클래스를 통해 객체를 생성하여 접근하고 사용 할 수 있는 집합체
+
+struct Monster
+{
+	// 여러개의 변수를 하나로 묶어 사용자 정의 자료형으로 사용
+	// 원칙적으로 함수는 묶을수는 없음
+};
+
+class Player
+{
+	// 속성 -> 변수
+	// 기능 -> 함수
+
+public:
+	Player() 
+		: hp(100), mp(100), level(1), exp(0)
+	{ 
+		cout << "Player( " << this << " ) 실행" << endl; 
+	}
+
+	~Player() { cout << "~Player( " << this << " ) 실행" << endl; }
+
+	void Attack()
+	{
+		cout << "공격!!!!" << endl;
+	}
+
+private:
+	int hp;
+	int mp;
+	uint32_t level;
+	uint32_t exp;
+};
+
+#pragma endregion
 
 int main()
 {
-#pragma region Cpp_I/O
+#pragma region Scope_Resolution_Operator
 
 	/*
 	
-	char a = 'A';
-	int b = 100;
-	float c = 9.81f;
+	// 여러 범위에서 사용되는 식별자를 구분하는데 사용하는 연산자
 
-	// ( << : 삽입 연산자 )
-	// 자신이 참조한 값을 반환하는 연산자
+	// :: (범위 연산자)
 
-	// std::endl : 개행
-	std::cout << (int)a << " " << b << " " << c << std::endl;
+	int data = 100;
 
-	int data = 0;
-	int data1 = 0;
-
-	// ( >> : 추출 연산자 )
-	// 버퍼에 저장한 다음 
-	// 지정된 형식의 크기만큼 버퍼 안의 내용을 전달하는 연산자
-	// NULL 문자까지만 버퍼 안의 내용을 전달하는 연산자 (문자열의 경우)
-	std::cin >> data >> data1;
-
+	// 범위 지정 연산자는 전역변수와 같은 이름의 지역 변수가 선언되었을
+	// 가장 가까운 범위에 선언된 변수의 이름을 사용하는 범위 규칙이 존재하므로
+	// 전역변수가 호출되자 않는다.
 	std::cout << "data의 값 : " << data << std::endl;
-	std::cout << "data1의 값 : " << data1 << std::endl;
-	
+	std::cout << "::data의 값 : " << ::data << std::endl;
+
 	*/
 
 #pragma endregion
 
-#pragma region Cpp_Dynamic_allocation
+#pragma region auto
 
 	/*
 	
-	// C
-	// 할당 : malloc()
-	// 해제 : free()
+	// 선언된 변수의 초기화 식을 사용하여
+	// 해당 형식을 추론하도록 컴파일러에게 지시하는 예약어
 
-	// C++
-	// 할당 : new
-	// 해제 : delete
+	// SDK 임포트 설치
+	// API 함수()
+	// PhotonManager(), PlayFab() 30 ~ 40 개
 
-	int* ptr = new int(0);
+	auto decimal = 6.25;
+	auto value = 100;
 
-	// new 객체 생성자를 호출한다.
-	// 타입 검사를 하기 때문에 다른 타입으로 사용할 수 없다.
+	// auto를 사용할 때 값을 넣어주어야 한다.
+	// ex) auto b;
+	decltype((value)) refValue = value;
 	
-	// malloc 생성자가 호출되지 않는다.
-	// 타입 검사를 하지 않는다.
-
-	*ptr = 100;
-
-	std::cout << *ptr << std::endl;
-	std::cout << std::endl;
-
-	delete ptr;
-
-	ptr = new int[3] { 100, 200, 300 };
-	for (int i = 0; i < 3; i++)
+	int nArr[10] = { 0 };
+	for (int i = 0; i < 10; i++)
 	{
-		std::cout << ptr[i] << ' ';
+		nArr[i] = i;
 	}
-	std::cout << std::endl;
-	delete[] ptr;
+	
+	for (const auto &it : nArr)
+	{
+		cout << it << " ";
+	}
+	cout << endl;
 
 	*/
 
 #pragma endregion
 
-#pragma region Reference
+	Player p1;
+	Player* p2 = new Player();
 
-	/*
-	
-	// 어떤 변수의 메모리 공간의 또 다른 이름
-	
-	int value = 10;
+	p2->Attack();
 
-	// 참조자 선언
-	// & : 참조차 선언 기호
-	int& other = value;
-	int& other1 = value;
-
-	std::cout << "value의 값 : " << value << std::endl;
-	std::cout << "other의 값 : " << other << std::endl;
-
-	other = 300;
-	other1 = 25;
-	Function(value);
-
-	std::cout << "value의 값 : " << value << std::endl;
-	std::cout << "other의 값 : " << other << std::endl;
-
-	*/
-
-#pragma endregion
-
+	delete p2;
 	return 0;
 }
-
-// Socket 통신
-// 클라이언트와 서버가 즉각적으로 통신
-
-// HTTP 통신
-// 클라이언트와 서버가 텀을 두고 통신

@@ -24,4 +24,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="(2023.06.13 Tue) CppStayle">
+      <Filter>Header Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

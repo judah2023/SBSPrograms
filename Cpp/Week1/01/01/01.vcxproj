@@ -132,6 +132,9 @@
   <ItemGroup>
     <ClInclude Include="(2023.06.12 Mon) CppStayle.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="(2023.06.13 Tue) CppStayle" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

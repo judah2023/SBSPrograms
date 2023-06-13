@@ -1,30 +1,27 @@
 #include <iostream>
-#include <algorithm>
-#include <vector>
-#include <string>
+#include <queue>
 using namespace std;
 
 int main()
 {
-	int n, k;
+	queue<int> nList;
+	int n;
 
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	cin >> n >> k;
-	vector<int> nList(n);
+	cin >> n;
 	for (int i = 0; i < n; i++)
-		nList[i] = i + 1;
+		nList.push(i + 1);
 
-	size_t idx = 0;
-	cout << "<";
-	for (int i = n; i > 1; i--)
+	int i = 0, temp;
+	while (nList.size() > 1 && ++i > 0)
 	{
-		idx += (k - 1);
-		idx %= i;
-		cout << nList[idx] << ", ";
-		nList.erase(nList.begin() + idx);
+		temp = nList.front();
+		nList.pop();
+		if (i % 2 == 0)
+			nList.push(temp);
 	}
-	cout << nList[0] << ">";
 
+	cout << nList.front() << endl;
 	return 0;
 }
