@@ -131,9 +131,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="(2023.06.12 Mon) CppStayle.h" />
+    <ClInclude Include="%282023.06.14 Wed%29 Class.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="(2023.06.13 Tue) CppStayle" />
+    <None Include="%282023.06.13 Tue%29 Namespace.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
