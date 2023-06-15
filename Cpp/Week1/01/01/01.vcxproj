@@ -128,10 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="(2023.06.12 Mon) CppStayle.h" />
     <ClInclude Include="%282023.06.14 Wed%29 Class.h" />
+    <ClInclude Include="%282023.06.15 Thu%29 Constructor.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="%282023.06.13 Tue%29 Namespace.h" />

@@ -18,12 +18,21 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="(2023.06.12 Mon) CppStayle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="%282023.06.14 Wed%29 Class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="%282023.06.15 Thu%29 Constructor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
