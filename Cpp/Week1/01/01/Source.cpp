@@ -1,107 +1,142 @@
-﻿#include "Weapon.h"
+﻿#include <iostream>
 
 using namespace std;
 
-#pragma region Constructor
+#pragma region Copy
 
-class Animal
+// 객체를 복사할 때, 참조 값이 아닌 인스턴스의 값을 복사하여
+// 서로 다른 메모리를 생성하는 복사.
+
+class GameObject
 {
-	int age;
+private:
+	int size;
+	int* data;
+	static int deathCount;
 
 public:
-	// 생성자
-	// 클래스의 인스턴스가 생성되는 시점에서
-	// 자동으로 호출되는 특수한 멤버 함수
-	// 생성자는 함수 오버로딩이 가능
-
-	// 생성자의 경우 객체가 생성될 때 단 한 번만 호출되며,
-	// 생성자는 반환형이 존재하지 않는다.
-
-	// 따라서, 생성자 호출 전에는
-	// 객체에 대한 메모리는 할당되지 않는다.
-
-	Animal() = default;
-
-	Animal(int x) : age(x)
+	GameObject()
 	{
-		cout << "생성자 Animal(int) 호출" << endl;
+		size = 1;
+		data = new int[size] {0};
 	}
 
-	// 복사 생성자
-	// 같은 객체를 복사하여 생성시킬 대 호출되는 생성자
-	Animal(const Animal& clone)
+	GameObject(const int m_size)
 	{
-		age = clone.age;
-		cout << "복사 생성자 Animal(const Animal&) 호출" << endl;
+		size = m_size;
+		data = new int[size] {0};
 	}
 
-	// 소멸자
-	// 객체가 소멸될 때 자동으로 실행되는 클래스의 멤버 함수
-	// 소멸자는 함수 오버로딩이 불가능
-
-	~Animal()
+	GameObject(const int m_size, const int* dataArr)
 	{
-		// 소멸자는 객체가 메모리에서 해제 될 때
-		// 단 한번만 호출되며, 소멸자에는 매개변수를 생성하여 사용 할 수 없다.
-		cout << "Animal() 소멸" << endl;
+		size = m_size;
+		data = new int[size] {0};
+		for (int i = 0; i < size; i++)
+		{
+			data[i] = dataArr[i];
+		}
+	}
+
+	GameObject(const GameObject& rhs)
+	{
+		size = rhs.size;
+		data = new int[size];
+		for (int i = 0; i < size; i++)
+		{
+			data[i] = rhs.data[i];
+		}
+		cout << "Deep Copy Completed!" << endl;
+	}
+
+	~GameObject()
+	{
+		if (data != nullptr)
+		{
+			delete[] data;
+		}
+		deathCount++;
+		cout << "\n오브젝트 소멸" << endl;
+		cout << "deathCount : " << deathCount << endl;
+	}
+
+	void SetData(const int m_size, const int* dataArr)
+	{
+		if (m_size > size)
+		{
+			delete[] data;
+			size = m_size;
+			data = new int[size] {0};
+		}
+
+		for (int i = 0; i < m_size; i++)
+		{
+			data[i] = dataArr[i];
+		}
+	}
+
+	void PrintObject()
+	{
+		cout << "\nsize : " << size << endl;
+		for (int i = 0; i < size; i++)
+		{
+			cout << "data[" << i << "] : " << data[i] << endl;
+		}
 	}
 };
 
-#pragma endregion
-
-#pragma region Default_Parameter
-
-// 매개변수에 기본 값을 선언하여 함수가 호출될 때
-// 인수 없이 호출될 수 있도록 설정하는 매개변수
-
-void Damage(int x = 100)
-{
-	cout << "x의 값 : " << x << endl;
-}
-
-// 컴파일러는 매개 변수 위치를 유추하지 못하므로
-// 기본 매개 변수를 선언 할 때 오른쪽에서 부터 정의한다.
-void Calculator(int x, int y, int z = 300)
-{
-	cout << "x의 값 : " << x << endl;
-	cout << "y의 값 : " << y << endl;
-	cout << "z의 값 : " << z << endl;
-}
+int GameObject::deathCount = 0;
 
 #pragma endregion
 
 int main()
 {
-#pragma region Constructor_main()
+#pragma region Shallow_Copy
 
-	Animal animal1;
-
-	Animal animal2 = animal1;
-
-	Weapon weapon;
-
-	weapon.Stat();
-
-	// 동적할당의 경우,
-	// 프로그램이 종료되어도 메모리 할당이 해제되지 않으므로
-	// 소멸자가 호출되지 않는다.
-	Animal* aPtr = new Animal(15);
-
-	// 따라서, 사용자는 동적할당한 객체를 해제할 책임이 생긴다.
-	delete aPtr;
-
-#pragma endregion
-
-#pragma region Default_Parameter_main()
-	
 	/*
 	
-	Damage(999);
-	Calculator(1, 2);
+	// 객체를 복사할 때 주솟값을 복사하여 
+	// 같은 메모리를 가리키는 복사
+
+	int* ptr1 = new int;
+	int* ptr2 = ptr1;
+
+	// 얕은 복사는 같은 객체가 서로 같은 메모리 공간을 참조하고 있기 때문에
+	// 하나의 객체로 값을 변경하게 되면 메모리 공간을 참조하는 객체도 함께 영향을 받는다.
+
+	*ptr1 = 100;
+	*ptr2 = 999;
+
+	cout << "ptr1 = " << *ptr1 << endl;
+	cout << "ptr2 = " << *ptr2 << endl;
+
+	delete ptr1;
+	// delete ptr2; // ERROR : 이미 해제된 메모리를 해제하려 함
 
 	*/
 
 #pragma endregion
+
+#pragma region Deep_Copy
+
+	/*
+	
+	int size = 3;
+	int data[3] = { 1,2,3 };
+
+	GameObject obj1;
+	GameObject obj2 = obj1;
+
+	obj2.SetData(3, data);
+	obj2.PrintObject();
+
+	*/
+
+#pragma endregion
+
+	GameObject obj1(3);
+	GameObject obj2(3);
+	GameObject obj3(3);
+	GameObject obj4(3);
 
 	return 0;
 }
