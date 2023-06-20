@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int value = 50;
+int value = 3000;
 
 int main()
 {
