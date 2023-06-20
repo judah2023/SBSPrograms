@@ -127,11 +127,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="(2023.6.19 Mon).h" />
+    <ClInclude Include="%282023.6.19 Mon%29 Inheritance.h" />
+    <ClInclude Include="%282023.6.20 Tue%29 .h" />
+    <ClInclude Include="Computer.h" />
+    <ClInclude Include="Divice.h" />
     <ClInclude Include="IPhone.h" />
+    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Mouse.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Computer.cpp" />
+    <ClCompile Include="Divice.cpp" />
     <ClCompile Include="IPhone.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

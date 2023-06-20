@@ -13,21 +13,54 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Class Header Files">
+      <UniqueIdentifier>{fcf34eeb-0384-4c50-8407-1b987173f1a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class Source Files">
+      <UniqueIdentifier>{46c62f4b-9421-40d5-91be-9ab39b1189b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="(2023.6.19 Mon).h">
+    <ClInclude Include="%282023.6.19 Mon%29 Inheritance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IPhone.h">
+    <ClInclude Include="%282023.6.20 Tue%29 .h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Computer.h">
+      <Filter>Class Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Divice.h">
+      <Filter>Class Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IPhone.h">
+      <Filter>Class Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Class Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Class Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Computer.cpp">
+      <Filter>Class Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Divice.cpp">
+      <Filter>Class Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="IPhone.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Class Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Class Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Class Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
