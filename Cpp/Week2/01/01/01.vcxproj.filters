@@ -24,7 +24,7 @@
     <ClInclude Include="%282023.6.19 Mon%29 Inheritance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="%282023.6.20 Tue%29 .h">
+    <ClInclude Include="%282023.6.20 Tue%29 Multiple_Inheritance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Computer.h">
@@ -40,6 +40,12 @@
       <Filter>Class Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mouse.h">
+      <Filter>Class Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="(2023.6.21 Wed) Multiple_Inheritance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
       <Filter>Class Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -60,6 +66,9 @@
       <Filter>Class Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mouse.cpp">
+      <Filter>Class Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
       <Filter>Class Source Files</Filter>
     </ClCompile>
   </ItemGroup>
