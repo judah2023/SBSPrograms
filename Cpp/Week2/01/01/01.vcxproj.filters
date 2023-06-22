@@ -42,11 +42,20 @@
     <ClInclude Include="Mouse.h">
       <Filter>Class Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="(2023.6.21 Wed) Multiple_Inheritance.h">
+    <ClInclude Include="%282023.6.21 Wed%29 Function_Overloading.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>Class Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Class Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Class Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="(2023.6.22 Thu) Function_Overloading.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +78,12 @@
       <Filter>Class Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
+      <Filter>Class Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Class Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
       <Filter>Class Source Files</Filter>
     </ClCompile>
   </ItemGroup>

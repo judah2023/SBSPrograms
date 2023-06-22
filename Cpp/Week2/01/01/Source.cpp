@@ -1,89 +1,64 @@
-﻿#include <iostream>
-#include "Vector3.h"
+﻿#include "Sword.h"
 
 using namespace std;
-#pragma region Polymorphism
-
-/*
-
-*/
-
-// 여러 개의 서로 다른 객체가 동일한 기능을
-// 서로 다른 방법으로 처리할 수 있는 기능
-
-#pragma endregion
-
-#pragma region Funcion_Overloading
-
-/*
-
-// 같은 이름의 함수를 매개변수의 자료형과 매개변수의 수로 구분하여
-// 여러 개를 선언 할 수 있는 기능
-
-template<typename T>
-void Add(T x, T y)
-{
-	cout << x + y << endl;
-}
-
-void Add(int x, int y)
-{
-	cout << x + y << endl;
-}
-
-// 함수의 오버로딩의 경우
-// 함수의 매개변수에 전달하는 인수의 형태를 보고 호출하므로
-// 반환형으로 함수의 오버로딩을 생성할 수 없다.
-// int Add(int x, int x) { return x + y; }	// (X)
-
-void Add(double x, double y)
-{
-	cout << x + y << endl;
-}
-
-*/
-
-#pragma endregion
-
-
 
 int main()
 {
-	// 함수의 오버로딩
+
+#pragma region Funcion_Override
+
 	/*
-	Add(1, 2);
-	Add(1.111, 2.2124);
+
+	// 상위 클래스에 있는 함수를
+	// 하위 클래스에 재정의 하여 사용하는 기능
+
+	// 함수의 오버라이드는 상속 관계에서만 이루어지며,
+	// 하위 클래스에서 함수를 재정의 할 때 상위 클래스의
+	// 함수 형태와 일치해야 한다.
+	Weapon weapon;
+	weapon.Attack();
+
+	Sword sword;
+	sword.Attack();
+
+	// 바인딩	( 정적 바인딩, 동적 바인딩 )
+	// 프로그램의 어떤 기본 단위가 가질 수 있는 구성 요소의
+	// 구체적인 값을 결정하는 것
+
+	// 정적 바인딩 : 컴파일 시점에 결정되는 것
+	// 동적 바인딩 : 런타임 시점에 결정되는 것
+	weapon = sword;
+	weapon.Attack();
+
 	*/
 
-	// 연산자 오버로딩
+#pragma endregion
+
+#pragma region Vitual_Function
+
+	/*
 	
-	Vector3 v1(2, 2, 2);
-	Vector3 v2(1, 2, 3);
-	v1.Print();
-	v2.Print();
-	cout << endl;
+	*/
 
-	Vector3 v3(v1 + v2);
-	v1.Print();
-	v2.Print();
-	v3.Print();
-	cout << endl;
+	// 상속하는 클래스 내에서 같은 형태의 함수로
+	// 재정의 될 수 있는 함수
 
-	v1 = v2 + v3;
-	v1.Print();
-	v2.Print();
-	v3.Print();
-	cout << endl;
-	
+	Weapon *ptr = new Sword;
 
-	Vector3 v4(1, 1, 1);
-	((v4++)++).Print();
-	v4.Print();
+	// 가상 함수의 경우 가상 함수 테이블을 사용하여 호출되는 함수를 실행 시간에 결정하며,
+	// 정적으로 선언된 함수는 가상 함수로 선언 할 수 있다.
+
+	ptr->Stat();
+	ptr->Attack();
+
+	delete ptr;
+
+	// 가상 함수 실행 시간에 상위 클래스에 대한 참조로
+	// 하위 클래스에 재정의된 함수를 호출할 수 있으며,
+	// 접근 지정자는 공개로 설정해야 한다.
+
+#pragma endregion
+
 
 	return 0;
 }
-
-// 단항 연산자
-// ++ --
-// v4 = {1,1,1}
-// ++(++v4) = 3,3,3
