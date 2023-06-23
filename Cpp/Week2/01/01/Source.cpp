@@ -1,64 +1,62 @@
-﻿#include "Sword.h"
+﻿#include <iostream>
+#include "Marine.h"
+#include "Sword.h"
 
 using namespace std;
 
 int main()
 {
-
-#pragma region Funcion_Override
-
+#pragma region Pure_Virtual_Funcion
+	
 	/*
+	* 
+	// 순수 가상 함수를 가지는 클래스는 추상 클래스로 정의된다.
+	// Unit unit;		// (X)
+	
+	// 추상 클래스의 경우 포인터 타입으로 사용할 수 있다.
+	// Unit * unitPtr;	// (O)
 
-	// 상위 클래스에 있는 함수를
-	// 하위 클래스에 재정의 하여 사용하는 기능
+	Marine marine;
 
-	// 함수의 오버라이드는 상속 관계에서만 이루어지며,
-	// 하위 클래스에서 함수를 재정의 할 때 상위 클래스의
-	// 함수 형태와 일치해야 한다.
-	Weapon weapon;
-	weapon.Attack();
+	marine.Skill();
 
-	Sword sword;
-	sword.Attack();
-
-	// 바인딩	( 정적 바인딩, 동적 바인딩 )
-	// 프로그램의 어떤 기본 단위가 가질 수 있는 구성 요소의
-	// 구체적인 값을 결정하는 것
-
-	// 정적 바인딩 : 컴파일 시점에 결정되는 것
-	// 동적 바인딩 : 런타임 시점에 결정되는 것
-	weapon = sword;
-	weapon.Attack();
+	// 가상 함수는 한 개 이상의 가상 함수를 포함하는 클래스가 있을 때
+	// 객체 주소에 가상 함수 테이블을 추가한다.
+	cout << sizeof(marine) << endl;
 
 	*/
 
 #pragma endregion
 
-#pragma region Vitual_Function
+#pragma region Virtual_Destructor
 
 	/*
 	
-	*/
+	// 객체가 소멸 될 때 
+	// 현재 참조하고 있는 객체와 상관없이
+	// 모두 호출되는 소멸자
 
-	// 상속하는 클래스 내에서 같은 형태의 함수로
-	// 재정의 될 수 있는 함수
+	Weapon* ptr = new Sword;
 
-	Weapon *ptr = new Sword;
-
-	// 가상 함수의 경우 가상 함수 테이블을 사용하여 호출되는 함수를 실행 시간에 결정하며,
-	// 정적으로 선언된 함수는 가상 함수로 선언 할 수 있다.
-
-	ptr->Stat();
 	ptr->Attack();
 
+	// 상속된 객체가 해제될 때 
+	// 하위 클래스의 소멸자가 먼저 실행되고
+	// 상위 클래스의 소멸자가 실행되어야 하기 때문에
+	// 실행 시간에 메모리에 할당된 객체를 확인하고 소멸시켜야 한다.
 	delete ptr;
 
-	// 가상 함수 실행 시간에 상위 클래스에 대한 참조로
-	// 하위 클래스에 재정의된 함수를 호출할 수 있으며,
-	// 접근 지정자는 공개로 설정해야 한다.
+	*/
 
 #pragma endregion
 
+	// Up-Casting
+	// 하위 클래스의 정보를 담을 수 있는 객체에 
+	// 상위클래스의 자료형을 부여해서 상위 클래스처럼 사용하게 하는 것이다.
 
+	Weapon* wptr = new Sword;
+	auto sptr = static_cast<Sword*>(wptr);
+
+	delete sptr;
 	return 0;
 }

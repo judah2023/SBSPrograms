@@ -4,14 +4,8 @@
 class Sword : public Weapon
 {
 public:
-	virtual void Stat();
-	void Attack();
-};
-
-
-class LongS : public Sword
-{
-public:
+	Sword();
+	~Sword() override;
 	virtual void Stat();
 	void Attack();
 };

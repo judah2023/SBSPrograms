@@ -1,6 +1,16 @@
 #include "Sword.h"
 #include <iostream>
 
+Sword::Sword()
+{
+	std::cout << "Sword() »ý¼º" << std::endl;
+}
+
+Sword::~Sword()
+{
+	std::cout << "~Sword() ¼Ò¸ê" << std::endl;
+}
+
 void Sword::Stat()
 {
 	attack = 999;
@@ -10,15 +20,4 @@ void Sword::Stat()
 void Sword::Attack()
 {
 	std::cout << "º£±â" << std::endl;
-}
-
-void LongS::Stat()
-{
-	attack = 9999;
-	std::cout << "·Õ¼Òµå °ø°Ý·Â : " << attack << std::endl;
-}
-
-void LongS::Attack()
-{
-	std::cout << "ÈÖµå¸£±â" << std::endl;
 }

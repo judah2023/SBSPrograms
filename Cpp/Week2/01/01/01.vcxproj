@@ -130,13 +130,16 @@
     <ClInclude Include="%282023.6.19 Mon%29 Inheritance.h" />
     <ClInclude Include="%282023.6.20 Tue%29 Multiple_Inheritance.h" />
     <ClInclude Include="%282023.6.21 Wed%29 Function_Overloading.h" />
-    <ClInclude Include="(2023.6.22 Thu) Function_Overloading.h" />
+    <ClInclude Include="%282023.6.22 Thu%29Vitual_Function.h" />
+    <ClInclude Include="(2023.6.23 Fri) Vitual_Function.h" />
     <ClInclude Include="Computer.h" />
     <ClInclude Include="Divice.h" />
     <ClInclude Include="IPhone.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Marine.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Sword.h" />
+    <ClInclude Include="Unit.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
@@ -145,9 +148,11 @@
     <ClCompile Include="Divice.cpp" />
     <ClCompile Include="IPhone.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Marine.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
