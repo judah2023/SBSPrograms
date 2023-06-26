@@ -1,41 +1,60 @@
 #include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
-unsigned bags[5001] = { -1, -1, -1, 1, -1, 1, 0 };
-
-unsigned getBagAmount(int n)
-{
-    if (bags[n] != 0)
-        return bags[n];
-
-    auto l = getBagAmount(n - 3);
-    auto r = getBagAmount(n - 5);
-
-    if (l == r && r == -1)
-    {
-        bags[n] = -1;
-    }
-    else
-    {
-        if (l < r)
-            bags[n] = l + 1;
-        else
-            bags[n] = r + 1;
-    }
-
-    return bags[n];
-}
-
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
 
-    int n, temp = -1;
+	vector<string> listPS;
+	string temp;
+	while (getline(cin, temp))
+	{
+		if (temp == "")
+			break;
 
-    cin >> n;
-    cout << (int)getBagAmount(n) << endl;
+		listPS.push_back(temp);
+	}
 
-    return 0;
+	int cntSmall, cntBig;
+	for (const auto &it: listPS)
+	{
+		cntSmall = cntBig = 0;
+		for (const auto& pch : it)
+		{
+			if (pch == '(')
+				++cntSmall;
+			else if (pch == '[')
+				++cntBig;
+			else if (pch == ')')
+				if (cntSmall > 0)
+				{
+					--cntSmall;
+				}
+				else
+				{
+					cntSmall = -1;
+					break;
+				}
+			else if (pch == ']')
+				if (cntBig > 0)
+				{
+					--cntBig;
+				}
+				else
+				{
+					cntBig = -1;
+					break;
+				}
+		}
+		
+		if (cntSmall == 0 && cntBig == 0)
+			cout << "YES\n";
+		else
+			cout << "NO\n";
+	}
+	return 0;
 }

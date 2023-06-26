@@ -60,11 +60,11 @@
     <ClInclude Include="Unit.h">
       <Filter>Class Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Marine.h">
+    <ClInclude Include="(2023.6.23 Fri) Vitual_Function.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="(2023.6.23 Fri) Vitual_Function.h">
-      <Filter>Resource Files</Filter>
+    <ClInclude Include="Marine.h">
+      <Filter>Class Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +99,7 @@
       <Filter>Class Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Marine.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Class Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

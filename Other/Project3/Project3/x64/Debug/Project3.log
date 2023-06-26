@@ -1,6 +1,2 @@
 ﻿  Source.cpp
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\Other\Project3\Project3\Source.cpp(5,26): warning C4838: conversion from 'int' to 'unsigned int' requires a narrowing conversion
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\Other\Project3\Project3\Source.cpp(5,30): warning C4838: conversion from 'int' to 'unsigned int' requires a narrowing conversion
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\Other\Project3\Project3\Source.cpp(5,34): warning C4838: conversion from 'int' to 'unsigned int' requires a narrowing conversion
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\Other\Project3\Project3\Source.cpp(5,41): warning C4838: conversion from 'int' to 'unsigned int' requires a narrowing conversion
   Project3.vcxproj -> C:\Users\Administrator\Desktop\NGH\SBSPrograms\Other\Project3\x64\Debug\Project3.exe
