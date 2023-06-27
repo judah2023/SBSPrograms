@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <vector>
+#include <stack>
 
 using namespace std;
 
@@ -9,52 +9,54 @@ int main()
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	vector<string> listPS;
 	string temp;
-	while (getline(cin, temp))
+	while (true)
 	{
-		if (temp == "")
-			break;
+		getline(cin, temp);
+		bool isValid = true;
+		stack<char> stackPS;
 
-		listPS.push_back(temp);
-	}
-
-	int cntSmall, cntBig;
-	for (const auto &it: listPS)
-	{
-		cntSmall = cntBig = 0;
-		for (const auto& pch : it)
+		for (const auto& pch : temp)
 		{
-			if (pch == '(')
-				++cntSmall;
-			else if (pch == '[')
-				++cntBig;
+			if (pch == '(' || pch == '[')
+				stackPS.push(pch);
 			else if (pch == ')')
-				if (cntSmall > 0)
+				if (!stackPS.empty() && stackPS.top() == '(')
 				{
-					--cntSmall;
+					stackPS.pop();
 				}
 				else
 				{
-					cntSmall = -1;
+					isValid = false;
 					break;
 				}
 			else if (pch == ']')
-				if (cntBig > 0)
+				if (!stackPS.empty() && stackPS.top() == '[')
 				{
-					--cntBig;
+					stackPS.pop();
 				}
 				else
 				{
-					cntBig = -1;
+					isValid = false;
 					break;
 				}
 		}
-		
-		if (cntSmall == 0 && cntBig == 0)
+
+		if (isValid)
 			cout << "YES\n";
 		else
 			cout << "NO\n";
 	}
 	return 0;
 }
+
+/*
+So when I die (the [first] I will see in (heaven) is a score list).
+[ first in ] ( first out ).
+Half Moon tonight (At least it is better than no Moon at all].
+A rope may form )( a trail in a maze.
+Help( I[m being held prisoner in a fortune cookie factory)].
+([ (([( [ ] ) ( ) (( ))] )) ]).
+ .
+.
+*/

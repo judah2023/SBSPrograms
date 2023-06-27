@@ -23,5 +23,11 @@
     <ClInclude Include="factorial_count0.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="avg_over.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
