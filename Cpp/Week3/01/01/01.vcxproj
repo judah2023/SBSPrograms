@@ -137,6 +137,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="(2023.6.26 Mon)Vitual_Function.h" />
+    <ClInclude Include="(2023.6.27 Tue)Smart_Pointer.h" />
+    <ClInclude Include="(2023.6.28 Wed)Vitual_Function.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Marine.h" />

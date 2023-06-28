@@ -65,5 +65,11 @@
     <ClInclude Include="Item.h">
       <Filter>Header Files\Class Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="(2023.6.27 Tue)Smart_Pointer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="(2023.6.28 Wed)Vitual_Function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

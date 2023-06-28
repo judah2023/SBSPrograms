@@ -1,5 +1,11 @@
 #include "Item.h"
 
+void Item::Upgrade()
+{
+	int x = 0;
+	std::cout << "Upgrade! : " << itemCode++ << std::endl;
+}
+
 Item::Item()
 {
 	std::cout << "Item::Item() Constructor" << std::endl;
