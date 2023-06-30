@@ -1,7 +1,7 @@
 #include "Sword.h"
 #include <iostream>
 
-Sword::Sword()
+Sword::Sword() : Weapon(100, 1'000, 3.75f)
 {
 	std::cout << "Sword() 생성" << std::endl;
 }
@@ -13,8 +13,9 @@ Sword::~Sword()
 
 void Sword::Stat()
 {
-	attack = 999;
 	std::cout << "검 공격력 : " << attack << std::endl;
+	std::cout << "검 가격 : " << price << std::endl;
+	std::cout << "검 치명 확률 : " << criticalHit << "\%" << std::endl;
 }
 
 void Sword::Attack()
