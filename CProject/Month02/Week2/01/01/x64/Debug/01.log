@@ -1,5 +1,0 @@
-﻿  Source.cpp
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Month02\Week2\01\01\Source.cpp(118,27): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Month02\Week2\01\01\Source.cpp(118,30): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Month02\Week2\01\01\Source.cpp(126,13): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
-  01.vcxproj -> C:\Users\Administrator\Desktop\NGH\SBSPrograms\CProject\Month02\Week2\01\x64\Debug\01.exe

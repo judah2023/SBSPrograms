@@ -1,8 +1,0 @@
-﻿  FileName.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xutility(4762,13): error C2100: illegal indirection
-C:\Users\Administrator\Desktop\NGH\SBSPrograms\Other\Project1\FileName.cpp(8,46): message : see reference to function template instantiation 'void std::fill<int,int>(const _FwdIt,const _FwdIt,const _Ty &)' being compiled
-          with
-          [
-              _FwdIt=int,
-              _Ty=int
-          ]
