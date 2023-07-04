@@ -18,12 +18,9 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Timer.h">
+    <ClInclude Include="%282023.07.03 Tue%29 vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
