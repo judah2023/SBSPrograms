@@ -130,8 +130,9 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="%282023.07.04 Tue%29 vector.h" />
-    <ClInclude Include="%282023.07.05 Wed%29 string.h" />
+    <ClInclude Include="%282023.07.04 Tue%29 Seqeunce_Container.h" />
+    <ClInclude Include="%282023.07.05 Wed%29 Container_adapter.h" />
+    <ClInclude Include="(2023.07.06 Thu) Associate_Container.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
