@@ -27,7 +27,7 @@ private:
 
 public:
 	DLinkedList() : head(new NODE{ 0, nullptr, nullptr }), tail(head), size() {}
-	~DLinkedList() { delete head; }
+	~DLinkedList() { Clear(); delete head; }
 
 	void PushFront(int data);
 	void PushBack(int data);
@@ -37,6 +37,8 @@ public:
 
 	NODE* Insert(NODE* target, int data);
 	NODE* Erase(NODE* target);
+
+	void Clear();
 
 	size_t Size();
 	bool Empty();

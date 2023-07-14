@@ -21,12 +21,18 @@
     <ClCompile Include="DLinkedList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MyVector.hpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Single Linked List (2023.07.13).h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DLinkedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

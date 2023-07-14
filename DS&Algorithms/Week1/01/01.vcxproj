@@ -140,10 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DLinkedList.cpp" />
+    <ClCompile Include="MyVector.hpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DLinkedList.h" />
+    <ClInclude Include="MyVector.h" />
     <ClInclude Include="Single Linked List (2023.07.13).h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

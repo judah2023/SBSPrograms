@@ -68,6 +68,20 @@ NODE* DLinkedList::Erase(NODE* target)
 	return nullptr;
 }
 
+void DLinkedList::Clear()
+{
+	NODE* curr = head;
+	while (head != tail)
+	{
+		head = head->next;
+		DeleteNode(curr);
+		curr = head;
+	}
+	head->prev = nullptr;
+	size = 0;
+	std::cout << "Clear Completed!" << std::endl;
+}
+
 size_t DLinkedList::Size()
 {
 	return size;
