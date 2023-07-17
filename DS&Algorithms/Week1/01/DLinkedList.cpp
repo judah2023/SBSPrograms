@@ -65,7 +65,12 @@ NODE* DLinkedList::Insert(NODE* target, int data)
 
 NODE* DLinkedList::Erase(NODE* target)
 {
-	return nullptr;
+	NODE* nextNode = target->next;
+	target->prev->next = nextNode;
+	nextNode->prev = target->prev;
+
+	DeleteNode(target);
+	return nextNode;
 }
 
 void DLinkedList::Clear()

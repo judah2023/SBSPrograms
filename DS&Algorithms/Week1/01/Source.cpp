@@ -8,7 +8,6 @@ using namespace std;
 
 int main()
 {
-	
 	DLinkedList DL;
 	DL.PushBack(10);
 	DL.PushBack(20);
