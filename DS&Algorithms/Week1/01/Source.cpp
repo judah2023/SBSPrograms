@@ -1,31 +1,23 @@
 ﻿#include <iostream>
 #include <list>
 #include <vector>
-#include "DLinkedList.h"
 #include "MyVector.h"
 
 using namespace std;
 
 int main()
 {
-	DLinkedList DL;
-	DL.PushBack(10);
-	DL.PushBack(20);
-	DL.PushBack(30);
-	DL.PushFront(0);
+	int(10);
+	try
+	{
+		MyVector<int> vec;
 
-	DL.PrintList();
-	cout << DL.Size() << endl;
-
-	DL.PopBack();
-
-	DL.PrintList();
-	cout << DL.Size() << endl;
-
-	DL.PopFront();
-
-	DL.PrintList();
-	cout << DL.Size() << endl;
+		cout << vec.at(0) << endl;
+	}
+	catch (const std::exception& e)
+	{
+		cout << e.what() << endl;
+	}
 	
 	return 0;
 }

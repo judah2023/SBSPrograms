@@ -1,22 +1,22 @@
 #pragma once
 #include <iostream>
-template<typename T>
+template<typename Key>
 class MyStack
 {
 	enum Constants { SIZE = 100 };
 
 private:
-	T* buffer;
+	Key* buffer;
 	size_t size;
 
 public:
 	MyStack() : 
-		buffer(new T[SIZE]), 
+		buffer(new Key[SIZE]), 
 		size(0) 
 	{}
 	~MyStack() { delete[] buffer; }
 
-	inline void Push(T&& data) 
+	inline void Push(Key&& data) 
 	{ 
 		if (IsFull())
 			throw std::out_of_range("\n스택이 가득 차있습니다.");
@@ -32,7 +32,7 @@ public:
 		size--;
 	}
 
-	T& Top() 
+	Key& Top() 
 	{ 
 		if (Empty()) 
 			throw std::out_of_range("\n스택이 비어있습니다.");
