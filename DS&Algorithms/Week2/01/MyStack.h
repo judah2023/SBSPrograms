@@ -1,27 +1,27 @@
 #pragma once
 #include <iostream>
 template<typename Key>
-class MyStack
+class MyQueue
 {
 	enum Constants { SIZE = 100 };
 
 private:
 	Key* buffer;
-	size_t size;
+	size_t rear;
 
 public:
-	MyStack() : 
+	MyQueue() : 
 		buffer(new Key[SIZE]), 
-		size(0) 
+		rear(0) 
 	{}
-	~MyStack() { delete[] buffer; }
+	~MyQueue() { delete[] buffer; }
 
 	inline void Push(Key&& data) 
 	{ 
 		if (IsFull())
 			throw std::out_of_range("\n스택이 가득 차있습니다.");
 			
-		buffer[size++] = data;
+		buffer[rear++] = data;
 	}
 
 	void Pop() 
@@ -29,7 +29,7 @@ public:
 		if (Empty())
 			throw std::out_of_range("\n스택이 비어있습니다.");
 
-		size--;
+		rear--;
 	}
 
 	Key& Top() 
@@ -37,12 +37,12 @@ public:
 		if (Empty()) 
 			throw std::out_of_range("\n스택이 비어있습니다.");
 		
-		return buffer[size - 1]; 
+		return buffer[rear - 1]; 
 	}
 
-	size_t Size() { return size; }
+	size_t Size() { return rear; }
 
-	bool Empty() { return size == 0; }
-	bool IsFull() { return size == SIZE; }
+	bool Empty() { return rear == 0; }
+	bool IsFull() { return rear == SIZE; }
 
 };

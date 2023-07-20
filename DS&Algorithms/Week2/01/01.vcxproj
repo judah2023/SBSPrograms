@@ -139,12 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="MyStack.cpp" />
-    <ClCompile Include="MyStack2.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="UnorderedMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LinearQueue.h" />
+    <ClInclude Include="MyQueue.h" />
     <ClInclude Include="MyStack.h" />
     <ClInclude Include="MyStack2.h" />
     <ClInclude Include="Sort%2823.07.18%29.h" />

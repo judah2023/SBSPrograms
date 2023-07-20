@@ -1,2 +1,4 @@
 ﻿  Source.cpp
+C:\Users\Administrator\Desktop\NGH\SBSPrograms\DS&Algorithms\Week2\01\LinearQueue.h(42): warning C4715: 'LinearQueue<int>::Front': not all control paths return a value
+C:\Users\Administrator\Desktop\NGH\SBSPrograms\DS&Algorithms\Week2\01\LinearQueue.h(48): warning C4715: 'LinearQueue<int>::Back': not all control paths return a value
   01.vcxproj -> C:\Users\Administrator\Desktop\NGH\SBSPrograms\DS&Algorithms\Week2\01\x64\Debug\01.exe

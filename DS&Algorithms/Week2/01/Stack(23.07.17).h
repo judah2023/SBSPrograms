@@ -9,7 +9,7 @@ int main()
 {
 	try
 	{
-		MyStack<int> stk1;
+		MyQueue<int> stk1;
 
 		stk1.Push(10);
 		stk1.Push(20);
