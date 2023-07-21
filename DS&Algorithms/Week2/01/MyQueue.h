@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 template<typename Key>
-class MyQueue
+class CircleQueue
 {
 	enum Constants { SIZE = 100 };
 
@@ -9,22 +9,23 @@ private:
 	Key* buffer;
 	size_t front;
 	size_t rear;
+	size_t size;
 
 
 public:
-	MyQueue() :
-		buffer(new Key[SIZE]),
-		front(0),
-		rear(0)
+	CircleQueue() :
+		buffer(new Key[SIZE]), front(0), rear(0), size(0)
 	{}
-	~MyQueue() { delete[] buffer; }
+	~CircleQueue() { delete[] buffer; }
 
 	inline void Push(Key&& data)
 	{
 		if (IsFull())
 			throw std::out_of_range("\n스택이 가득 차있습니다.");
 
-		buffer[rear++] = data;
+		buffer[rear] = data;
+		rear = (rear + 1) % SIZE;
+		size++;
 	}
 
 	void Pop()
@@ -32,7 +33,8 @@ public:
 		if (Empty())
 			throw std::out_of_range("\n스택이 비어있습니다.");
 
-		front++;
+		front = (front + 1) % SIZE;
+		size--;
 	}
 
 	Key& Front()
@@ -48,12 +50,12 @@ public:
 		if (Empty())
 			throw std::out_of_range("\n스택이 비어있습니다.");
 
-		return buffer[rear - 1];
+		return buffer[(rear + SIZE - 1) % SiZE];
 	}
 
-	size_t Size() { return rear - front; }
+	size_t Size() { return size; }
 
-	bool Empty() { return rear == front; }
-	bool IsFull() { return rear - front == SIZE; }
+	bool Empty() { return size == 0; }
+	bool IsFull() { return size = SIZE; }
 
 };

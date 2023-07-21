@@ -9,7 +9,7 @@ int main()
 {
 	try
 	{
-		MyQueue<int> stk1;
+		CircleQueue<int> stk1;
 
 		stk1.Push(10);
 		stk1.Push(20);

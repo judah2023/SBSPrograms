@@ -30,8 +30,12 @@ int main()
 
 	UnorderedMap<int, int> maps;
 	maps[10] = 2;
+	maps[1034] = 4;
 
 	auto iter = maps.Find(10);
+	cout << iter->first << " " << iter->second << endl;
+
+	iter = maps.Find(1034);
 	cout << iter->first << " " << iter->second << endl;
 
 	return 0;

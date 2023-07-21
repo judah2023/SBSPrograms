@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 template<typename Key>
-class MyQueue
+class CircleQueue
 {
 	enum Constants { SIZE = 100 };
 
@@ -10,11 +10,11 @@ private:
 	size_t rear;
 
 public:
-	MyQueue() : 
+	CircleQueue() : 
 		buffer(new Key[SIZE]), 
 		rear(0) 
 	{}
-	~MyQueue() { delete[] buffer; }
+	~CircleQueue() { delete[] buffer; }
 
 	inline void Push(Key&& data) 
 	{ 
